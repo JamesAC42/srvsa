@@ -16,13 +16,14 @@ jQuery(function($){
 	}
 	var App = {
 		init: function(){
-			this.cards = 1;
+			this.cards = util.store('application-cards');
+			this.cardamt = 1;
 			this.focus = 1;
 			this.bindEvents();
 			this.render();
 		},
 		focusIsLast:function(){
-			return this.focus == this.cards;
+			return this.focus == this.cardamt;
 		},
 		bindEvents: function(){
 			$('#next').on('click', this.nextCard.bind(this));
@@ -33,7 +34,9 @@ jQuery(function($){
 			$('#ff-next').on('click', this.gotoLast.bind(this));
 			$('#ff-back').on('click', this.gotoFirst.bind(this));
 			$('#hide-error').on('click', this.hideModal.bind(this));
-			$('form').on('keydown', 'input', this.cardLog.bind(this));
+			$('form')
+				.on('keydown', 'input', this.cardLog.bind(this))
+				.on('keyup', 'input', this.wordLog.bind(this));
 			$('body').on('keydown', this.cardMove.bind(this));
 		},
 		disable: function(el){
@@ -44,28 +47,34 @@ jQuery(function($){
 		},
 		addCard: function(e){
 			var focus = this.focus;
+			var cards = this.cards;
 			$('div.card:nth-child(' + focus + ')')
 				.addClass('left-card')
 				.after(CARD);
-			this.cards++;
+			cards.splice(focus, 0, '');
+			this.cardamt++;
 			focus++;
+			this.cards = cards;
 			this.focus = focus;
 			this.render();
 		},
 		removeCard: function(){
 			var focus = this.focus;
-			if(!(this.cards > 1)){
+			var cards = this.cards;
+			if(!(this.cardamt > 1)){
 				return;
 			}else{
 				$('div.card:nth-child(' + focus + ')').remove();
+				cards.splice((focus - 1), 1);
 				if(this.focusIsLast()){
 					focus--;
 					$('div.card:nth-child(' + focus + ')').removeClass('left-card');
 				}else{
 					$('div.card:nth-child(' + focus + ')').removeClass('right-card');
 				}
+				this.cards = cards;
 				this.focus = focus;
-				this.cards--;
+				this.cardamt--;
 				this.render();
 			}
 		},
@@ -119,8 +128,19 @@ jQuery(function($){
 				this.addCard();
 				$('div.card:nth-child(' + this.focus + ') input').focus();
 			}else{
-				this.render();
 				return;
+			}
+		},
+		wordLog: function(e){
+			var cards = this.cards;
+			var focus = this.focus;
+			if(e.which == TAB_KEY || e.which == ENTER_KEY){
+				return;
+			}else{
+				var word = $(e.target).val().trim();
+				cards[focus-1] = word;
+				this.cards = cards;
+				this.render();
 			}
 		},
 		cardMove: function(e){
@@ -162,7 +182,7 @@ jQuery(function($){
 		},
 		submitSet: function(){
 			if(this.canSubmit()){
-
+				return;
 			}else{
 				$('div.error').addClass('modal-visible');
 			}
@@ -183,12 +203,12 @@ jQuery(function($){
 					this.enable($('#back'));
 				}
 			}
-			if(this.cards == 1){
+			if(this.cardamt == 1){
 				this.disable($('#remove'));
 			}else{
 				this.enable($('#remove'));
 			}
-			$('#card-amt').text(this.focus + ' / ' + this.cards);
+			$('#card-amt').text(this.focus + ' / ' + this.cardamt);
 			if(this.canSubmit()){
 				this.enable($('#create'));
 			}else{
