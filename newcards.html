@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>newcards</title>
+	<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
+	<script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/newcards.css">
+	<script type="text/javascript" src="js/newcards.js"></script>
+</head>
+<body>
+	<div id="card-amt"></div>
+	<div class="error">
+		<div class="message">
+			You need at least 5 valid cards to create a set.
+		</div>
+		<div id="hide-error" class="button-modal">OK</div>
+	</div>
+	<div id="cards">
+		<form action="" method="POST">
+			<div class="card">
+				<input type="text" tabindex="-1" maxlength="30">
+			</div>
+		</form>
+	</div>
+	<div id="controls">
+		<div class="control">
+			<div class="control-button direction disabled" title="Back" id="back">
+			<div class="ff-move" title="First" id="ff-back">&#x2770;&#x2770;</div>&#x2770;</div>
+		</div>
+		<div class="control">
+			<div class="control-button edit disabled" title="Delete Card [shift+enter]" id="remove">&#x2716;</div>
+		</div>
+		<div class="control">
+			<div class="control-button disabled" title="Create Set" id="create">&#x2714;</div>
+		</div>
+		<div class="control">
+			<div class="control-button edit" title="Add Card [enter]" id="add">&#x270E;</div>
+		</div>
+		<div class="control">
+			<div class="control-button direction disabled" title="Next" id="next">
+			<div class="ff-move" title="Last" id="ff-next">&#x2771;&#x2771;</div>&#x2771;</div>
+		</div>
+	</div>
+</body>
+</html>
