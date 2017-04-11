@@ -63,6 +63,28 @@ div.button-modal{
 div.button-modal:hover{
     background:#ff8c1a;
 }
+div.progress-bar-outer{
+	position:absolute;
+	top:25%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	height:30px;
+	width:45vw;
+	max-width:600px;
+	background: rgba(124, 201, 255, 0.4);
+	border:none;
+	border-radius:10px;
+	overflow:hidden;
+}
+div.progress-bar-inner{
+	position:absolute;
+	top:0;
+	left:0;
+	height:100%;
+	width:50%;
+	background: rgba(124, 201, 255, 1);
+	transition: width .2s ease-in-out;
+}
 div.card{
     position:absolute;
     height:40vh;
