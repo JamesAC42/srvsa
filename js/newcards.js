@@ -188,6 +188,8 @@ jQuery(function($){
 			}
 		},
 		render: function(){
+			var progress = Math.round((this.focus / this.cardamt) * 100);
+			$('.progress-bar-inner').css('width', progress + '%');
 			if(this.focusIsLast()){
 				this.disable($('#next'));
 				if(this.focus == 1){
