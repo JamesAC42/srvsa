@@ -194,6 +194,11 @@ jQuery(function($){
 		render: function(){
 			var progress = Math.round((this.focus / this.cardamt) * 100);
 			$('.progress-bar-inner').css('width', progress + '%');
+			if(progress == 100){
+				$('.progress-bar-inner').addClass('progress-bar-complete');
+			}else{
+				$('.progress-bar-inner').removeClass('progress-bar-complete');
+			}
 			if(this.focusIsLast()){
 				this.disable($('#next'));
 				if(this.focus == 1){

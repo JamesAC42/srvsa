@@ -65,7 +65,7 @@ div.button-modal:hover{
 }
 div.progress-bar-outer{
 	position:absolute;
-	top:25%;
+	top:20%;
 	left:50%;
 	transform:translate(-50%,-50%);
 	height:30px;
@@ -83,7 +83,10 @@ div.progress-bar-inner{
 	height:100%;
 	width:50%;
 	background: rgba(124, 201, 255, 1);
-	transition: width .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+div.progress-bar-complete{
+    background: rgba(0, 230, 115, 1);
 }
 div.card{
     position:absolute;
