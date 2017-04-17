@@ -1,0 +1,70 @@
+body{
+	font-family: 'Palanquin Dark', sans-serif;
+	background: #007acc;;
+}
+div.centerpiece{
+	position:absolute;
+	margin:0;
+	padding:0;
+	background:#fff;
+	height:100%;
+	width:75vw;
+	top:0;
+	left:50%;
+	transform:translate(-50%,0);
+	-webkit-box-shadow: 2px 6px 44px -15px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 6px 44px -15px rgba(0,0,0,0.75);
+    box-shadow: 2px 6px 44px -15px rgba(0,0,0,0.75);
+    overflow-y:scroll;
+}
+div.centerpiece::-webkit-scrollbar{
+	display:none;
+}
+div.title-card{
+	position:relative;
+	margin:0;
+	padding:0;
+	height: 25%;
+	max-height:200px;
+	width:100%;
+}
+div.back{
+	position:absolute;
+	height:50px;
+	width:100px;
+	top:50%;
+	left:10%;
+	transform: translate(0,-50%);
+	font-size:23px;
+	text-align: center;
+	line-height: 50px;
+	border-radius:20px;
+	transition:all .2s ease-in-out;
+	cursor:pointer;
+}
+div.back:hover{
+	background: #9AD1F8;
+	color:#fff;
+}
+div.title{
+	position:absolute;
+	height:100%;
+	width:50%;
+	right:10%;
+	text-align: right;
+	font-size:60px;
+	font-style:bold;
+	line-height:25vh;
+}
+div.divider{
+	height:0;
+	width:95%;
+	margin:0 auto;
+	border-bottom:2px solid black;
+}
+div.set{
+	height:15vw;
+	width: 25vw;
+	float:left;
+	border:1px solid blue;
+}
