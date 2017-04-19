@@ -186,7 +186,7 @@ jQuery(function($){
 		},
 		submitSet: function(){
 			if(this.canSubmit()){
-				return;
+				$.post("/", {words: JSON.stringify(this.cards)});
 			}else{
 				$('div.error').addClass('modal-visible');
 			}
