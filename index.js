@@ -77,20 +77,31 @@ function processForm(req, res){
 		    	});
 		    });
 		}); */
-		console.log(fields.words);
 		var words = JSON.parse(fields.words);
 		var wordstring = '';
-		words.forEach(function(element){
-			wordstring += element + ", ";
+		words = words.filter(filterWords);
+		words.forEach(function(element,index){
+			var sanitizedw = element.replace(/\s/g, '');
+			sanitizedw = sanitizedw.replace(/[^A-Za-z\s!?]/g,'');
+			words[index] = sanitizedw;
+			if(sanitizedw === ''){
+				words.splice(index, 1);
+			}else{
+				wordstring += sanitizedw + ", ";
+			}
 		});
-		console.log(wordstring);
-		res.write(wordstring);
+		console.log(words);
+		res.write('http://localhost:3000/form.html');
 		res.end();
 	});
 }
 
 function filterDefs(input){
 	return typeof input === "string";
+}
+
+function filterWords(input){
+	return input !== '';
 }
 
 server.listen(3000);

@@ -67,13 +67,13 @@ jQuery(function($){
 			var cards = this.cards;
 			if(!(this.cardamt > 1)){
 				return;
-			}else{
+			} else {
 				$('div.card:nth-child(' + focus + ')').remove();
 				cards.splice((focus - 1), 1);
 				if(this.focusIsLast()){
 					focus--;
 					$('div.card:nth-child(' + focus + ')').removeClass('left-card');
-				}else{
+				} else {
 					$('div.card:nth-child(' + focus + ')').removeClass('right-card');
 				}
 				this.cards = cards;
@@ -117,10 +117,10 @@ jQuery(function($){
 				e.preventDefault();
 				if(e.shiftKey){
 					this.prevCard();
-				}else{
+				} else {
 					if(this.focusIsLast()){
 						this.addCard();
-					}else{
+					} else {
 						$('div.card:nth-child(' + this.focus + ')').blur();
 						this.nextCard();
 						return false;
@@ -131,7 +131,7 @@ jQuery(function($){
 				e.preventDefault();
 				this.addCard();
 				$('div.card:nth-child(' + this.focus + ') input').focus();
-			}else{
+			} else {
 				return;
 			}
 		},
@@ -140,7 +140,7 @@ jQuery(function($){
 			var focus = this.focus;
 			if(e.which == TAB_KEY || e.which == ENTER_KEY){
 				return;
-			}else{
+			} else {
 				var word = $(e.target).val().trim();
 				cards[focus-1] = word;
 				this.cards = cards;
@@ -152,22 +152,22 @@ jQuery(function($){
 			if(!$('div.card input').is(':focus')){
 				if(e.which !== ENTER_KEY && e.which !== RIGHT_KEY && e.which !== LEFT_KEY){
 					return false;
-				}else{
+				} else {
 					if(e.which == ENTER_KEY){
 						if(e.shiftKey){
 							this.removeCard();
-						}else{
+						} else {
 							this.addCard();
 						}
 					}else if(e.which == RIGHT_KEY){
 						this.nextCard();
 					}else if(e.which = LEFT_KEY){
 						this.prevCard();
-					}else{
+					} else {
 						return;
 					}
 				}
-			}else{
+			} else {
 				return;
 			}
 		},
@@ -186,8 +186,8 @@ jQuery(function($){
 		},
 		submitSet: function(){
 			if(this.canSubmit()){
-				$.post("/", {words: JSON.stringify(this.cards)});
-			}else{
+				$.post("/", {words: JSON.stringify(this.cards)}, data=>document.location.href = data);
+			} else {
 				$('div.error').addClass('modal-visible');
 			}
 		},
@@ -196,33 +196,33 @@ jQuery(function($){
 			$('.progress-bar-inner').css('width', progress + '%');
 			if(progress == 100){
 				$('.progress-bar-inner').addClass('progress-bar-complete');
-			}else{
+			} else {
 				$('.progress-bar-inner').removeClass('progress-bar-complete');
 			}
 			if(this.focusIsLast()){
 				this.disable($('#next'));
 				if(this.focus == 1){
 					this.disable($('#back'));
-				}else{
+				} else {
 					this.enable($('#back'));
 				}
-			}else{
+			} else {
 				this.enable($('#next'));
 				if(this.focus == 1){
 					this.disable($('#back'));
-				}else{
+				} else {
 					this.enable($('#back'));
 				}
 			}
 			if(this.cardamt == 1){
 				this.disable($('#remove'));
-			}else{
+			} else {
 				this.enable($('#remove'));
 			}
 			$('#card-amt').text(this.focus + ' / ' + this.cardamt);
 			if(this.canSubmit()){
 				this.enable($('#create'));
-			}else{
+			} else {
 				this.disable($('#create'));
 			}
 		}
