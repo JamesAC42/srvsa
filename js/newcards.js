@@ -149,7 +149,7 @@ jQuery(function($){
 		},
 		cardMove: function(e){
 			var focus = this.focus;
-			if(!$('div.card input').is(':focus')){
+			if(!$('div.card input').is(':focus') && !$('div.title-container input').is(':focus')){
 				if(e.which !== ENTER_KEY && e.which !== RIGHT_KEY && e.which !== LEFT_KEY){
 					return false;
 				} else {
@@ -164,9 +164,10 @@ jQuery(function($){
 					}else if(e.which = LEFT_KEY){
 						this.prevCard();
 					} else {
-						return;
+						return false;
 					}
 				}
+
 			} else {
 				return;
 			}
