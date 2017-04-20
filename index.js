@@ -90,8 +90,15 @@ function processForm(req, res){
 				wordstring += sanitizedw + ", ";
 			}
 		});
+		var fs = require('fs');
+		var wordsJson = {
+			words: words
+		};
+		var filename = Math.random().toString(36).substring(2, 5);
+		var filepath = "./data/" + filename + ".json";
+		fs.writeFile(filepath, JSON.stringify(wordsJson), "utf8");
 		console.log(words);
-		res.write('http://localhost:3000/form.html');
+		res.write('http://localhost:3000/');
 		res.end();
 	});
 }
