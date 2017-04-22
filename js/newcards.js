@@ -23,6 +23,7 @@ jQuery(function($){
 			this.cards = util.store('application-cards');
 			this.cardamt = 1;
 			this.focus = 1;
+			this.title = '';
 			this.bindEvents();
 			this.render();
 		},
@@ -41,6 +42,7 @@ jQuery(function($){
 			$('form')
 				.on('keydown', 'input', this.cardLog.bind(this))
 				.on('keyup', 'input', this.wordLog.bind(this));
+			$('div.title-container input').on('keydown', this.setTitle.bind(this));
 			$('body').on('keydown', this.cardMove.bind(this));
 		},
 		disable: function(el){
@@ -172,6 +174,10 @@ jQuery(function($){
 				return;
 			}
 		},
+		setTitle: function(){
+			this.title = $('div.title-container input').val().trim();
+			this.render();
+		},
 		canSubmit: function(){
 			var validamt = 0;
 			$('div.card').each(function(){
@@ -180,14 +186,15 @@ jQuery(function($){
 					validamt++;
 				}
 			});
-			return(validamt >= 5);
+			var submitbool = (validamt >= 5) && (this.title !== '');
+			return(submitbool);
 		},
 		hideModal: function(){
 			$('div.error').removeClass('modal-visible');
 		},
 		submitSet: function(){
 			if(this.canSubmit()){
-				$.post("/", {words: JSON.stringify(this.cards)}, data=>document.location.href = data);
+				$.post("/", {title: JSON.stringify(this.title), words: JSON.stringify(this.cards)}, data=>document.location.href = data);
 			} else {
 				$('div.error').addClass('modal-visible');
 			}

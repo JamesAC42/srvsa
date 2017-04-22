@@ -90,14 +90,17 @@ function processForm(req, res){
 				wordstring += sanitizedw + ", ";
 			}
 		});
+		var title = JSON.parse(fields.title)
+		title.replace(/[^A-Za-z\s!?]/g,'');
 		var fs = require('fs');
-		var wordsJson = {
+		var dataJson = {
+			title: title,
 			words: words
 		};
 		var filename = Math.random().toString(36).substring(2, 5);
 		var filepath = "./data/" + filename + ".json";
-		fs.writeFile(filepath, JSON.stringify(wordsJson), "utf8");
-		console.log(words);
+		fs.writeFile(filepath, JSON.stringify(dataJson), "utf8");
+		console.log(dataJson);
 		res.write('http://localhost:3000/');
 		res.end();
 	});
