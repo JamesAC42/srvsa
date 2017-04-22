@@ -109,6 +109,18 @@ div.title-container input{
     color:#fff;
     background: rgba(0,0,0,0);
 }
+div.title-container input::-webkit-input-placeholder{
+    color:#CFD9FF;
+}
+div.title-container input::-moz-placeholder{
+    color:#CFD9FF;
+}
+div.title-container input:-ms-input-placeholder{
+    color:#CFD9FF;
+}
+div.title-container input:-moz-placeholder{
+    color:#CFD9FF;
+}
 div.title-border-bottom{
     position:absolute;
     bottom:0;
@@ -121,7 +133,7 @@ div.title-border-bottom{
 }
 div.title-container:hover div.title-border-bottom{
     animation: bordereffect .3s;
-    border-color: #252756;
+    /*border-color: #252756;*/
 }
 @keyframes bordereffect{
     20%{
