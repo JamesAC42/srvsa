@@ -126,14 +126,14 @@ div.title-border-bottom{
     bottom:0;
     left:50%;
     height:0;
-    width:95%;
+    width:100%;
     transform:translate(-50%,0);
     border-bottom:4px solid #ABCFEE;
     transition: all .2s ease-in-out;
 }
 div.title-container:hover div.title-border-bottom{
-    animation: bordereffect .3s;
-    /*border-color: #252756;*/
+    border-width:6px;
+    border-color: #252756;
 }
 @keyframes bordereffect{
     20%{
