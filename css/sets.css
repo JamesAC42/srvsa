@@ -34,7 +34,7 @@ a.create-set{
 	display:block;
 	position:absolute;
 	height:60px;
-	width:60px;
+	width:120px;
 	top:50%;
 	left:10%;
 	transform: translate(0,-50%);
@@ -43,8 +43,9 @@ a.create-set{
 	color: #fff;
 	line-height: 60px;
 	text-align:center;
-	font-size:32px;
+	font-size:24px;
 	font-family: monospace;
+	text-decoration: none;
 	transition: background .2s ease-in-out;
 }
 a.create-set:hover{
@@ -79,15 +80,30 @@ div.set-outer:hover{
 div.set-title{
 	position:absolute;
 	left:10%;
-	top:50%;
-	height:15vh;
+	top:3vh;
 	width:40%;
-	line-height:15vh;
-	transform: translate(0,-50%);
-	font-size: 32px;
+	font-size: 30px;
 	font-family: 'Arimo', sans-serif;
 	text-overflow:ellipsis;
 	overflow-x:hidden;
+}
+div.set-info{
+	position:absolute;
+	left:10%;
+	bottom: 3vh;
+	height:4vh;
+	width:40%;
+	overflow-x: hidden;
+}
+div.set-date, div.set-cards{
+	float:left;
+	height:4vh;
+	width:50%;
+	text-align:left;
+	line-height: 4vh;
+	font-size:22px;
+	font-family: 'Arimo', sans-serif;
+	text-overflow: ellipsis;
 }
 div.action-outer{
 	position:absolute;

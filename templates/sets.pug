@@ -4,11 +4,13 @@ html(lang="en")
     title=Sets
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Arimo")
     link(rel="stylesheet", href="../css/sets.css")
+    script(src="../js/jquery-3.2.0.min.js")
+    script(src="../js/sets.js")
   body
     div.header
       div.header-inner
         div.title Sets
-        a.create-set(href="/") +
+        a.create-set(href="/") Create
     div.centerpiece
       if !files.length
         div.centerpiece-inner
@@ -17,7 +19,13 @@ html(lang="en")
         each set in files
           div.set-outer(id=set.filename)
             div.set-title #{set.title}
+            div.set-info
+              - let cardString = set.totalCards + ' Cards';
+              div.set-cards #{cardString}
+              - let date = new Date(set.dateCreated);
+              - let dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+              div.set-date #{dateString}
             div.action-outer
-              a.action.delete(title="Delete Set") &#x2716;
-              a.action.study(title="Study Set") &#x1f441;
-              a.action.edit(title="Edit Set") &#x270E;
+              a.action.delete(title="Delete Set" href="#" name=set.filename) &#x2716;
+              a.action.study(title="Study Set", href="/study?set=" + set.filename) &#x1f441;
+              a.action.edit(title="Edit Set", href="/edit?set=" + set.filename) &#x270E;

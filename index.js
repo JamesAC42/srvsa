@@ -6,11 +6,13 @@ var pug = require("pug");
 var parseString = require('xml2js').parseString;
 
 var server = http.createServer(function(req, res){
-  if (req.method.toLowerCase() == 'get'){
+  if (req.method.toLowerCase() === 'get'){
     displayPage(req, res);
-  } else if (req.method.toLowerCase() == 'post'){
-    if (req.url == '/') {
+  } else if (req.method.toLowerCase() === 'post'){
+    if (req.url === '/') {
       processForm(req, res);
+    } else if (req.url === '/deleteset') {
+      deleteSet(req, res);
     }
   }
 });
@@ -105,7 +107,6 @@ function processForm(req, res){
               }
             } else {
               var definitionsSpagget = entryList.entry[0].def[0].dt;
-              console.info(definitionsSpagget);
               let defs;
               if(Array.isArray(definitionsSpagget)){
                 defs = definitionsSpagget.map(function(def){
@@ -148,6 +149,7 @@ function processForm(req, res){
         title,
         words: results
       };
+      var totalCards = results.length;
       var filename = Math.random().toString(36).substring(2, 7);
       var filepath = "./data/sets/" + filename + ".json";
       var dataset = require("./data/sets.json");
@@ -155,6 +157,7 @@ function processForm(req, res){
         filename,
         dateCreated: Date.now(),
         title,
+        totalCards,
         canStudy: true
       });
       fs.writeFile("./data/sets.json", JSON.stringify(dataset, null, '  '), "utf8");
@@ -165,6 +168,26 @@ function processForm(req, res){
       console.error(err);
     });
   });
+}
+
+function deleteSet(req, res){
+  let form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields){
+    let filename = fields.file;
+    let sets = require('./data/sets.json');
+    let files = sets["files"];
+    let index;
+    for (let i  = 0; i< files.length; i++) {
+      if (files[i]["filename"] == filename) {
+        index = i;
+      }
+    }
+    files.splice(index, 1);
+    let newSets = {files};
+    fs.writeFile("./data/sets.json", JSON.stringify(newSets, null, '  '), "utf8");
+    res.write(filename.toString());
+    res.end();
+  })
 }
 
 function filterDefs(input){
