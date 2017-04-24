@@ -2,45 +2,57 @@ var http = require("http");
 var fs = require("fs");
 var formidable = require("formidable");
 var path = require("path");
+var pug = require("pug");
 var parseString = require('xml2js').parseString;
 
 var server = http.createServer(function(req, res){
   if (req.method.toLowerCase() == 'get'){
-    displayForm(req, res);
+    displayPage(req, res);
   } else if (req.method.toLowerCase() == 'post'){
-    processForm(req, res);
+    if (req.url == '/') {
+      processForm(req, res);
+    }
   }
 });
 
-function displayForm(req, res){
+function displayPage(req, res){
   var filePath = req.url;
-  if (filePath == '/')
+  if (filePath == '/') {
     filePath = '/newcards.html';
+  }
+  let oldPath = filePath;
   filePath = __dirname+filePath;
   var extname = path.extname(filePath);
   var contentType = 'text/html';
   switch (extname) {
-      case '.js':
-          contentType = 'text/javascript';
-          break;
-      case '.css':
-          contentType = 'text/css';
-          break;
+    case '.js':
+      contentType = 'text/javascript';
+      break;
+    case '.css':
+      contentType = 'text/css';
+      break;
   }
-  fs.exists(filePath, function(exists) {
-      if (exists) {
-          fs.readFile(filePath, function(error, content) {
-              if (error) {
-                  res.writeHead(500);
-                  res.end();
-              }
-              else {                   
-                  res.writeHead(200, { 'Content-Type': contentType });
-                  res.end(content, 'utf-8');                  
-              }
-          });
-      }
-  });
+  if (oldPath == '/sets') {
+    var setdata = require('./data/sets.json');
+    let htmlrender = pug.renderFile('./templates/sets.pug', setdata);
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end(htmlrender, 'utf8');
+  } else {
+    fs.exists(filePath, function(exists) {
+        if (exists) {
+            fs.readFile(filePath, function(error, content) {
+                if (error) {
+                    res.writeHead(500);
+                    res.end();
+                }
+                else {                   
+                    res.writeHead(200, { 'Content-Type': contentType });
+                    res.end(content, 'utf8');                  
+                }
+            });
+        }
+    });
+  }
 }
 
 function processForm(req, res){
@@ -66,7 +78,6 @@ function processForm(req, res){
         });
         http_res.on("end", function () {
           parseString(data, function(err, result) {
-            console.info(JSON.stringify(result), null, '  ');
             let entry;
             if (err) {
               reject(err);
@@ -94,21 +105,30 @@ function processForm(req, res){
               }
             } else {
               var definitionsSpagget = entryList.entry[0].def[0].dt;
-              var defs = definitionsSpagget.map(function(def){
-                let cleanDef;
-                if (typeof def === 'object') {
-                  cleanDef = def["_"].slice(1).trim();
-                } else if (typeof def === 'string') {
-                  cleanDef = def.slice(1).trim();
-                }
-                if (cleanDef !== '' || typeof cleanDef == 'object'){
-                  return cleanDef;
-                } else {
-                  return;
-                }
-              })
+              console.info(definitionsSpagget);
+              let defs;
+              if(Array.isArray(definitionsSpagget)){
+                defs = definitionsSpagget.map(function(def){
+                  let cleanDef;
+                  if (typeof def === 'object' && def["_"] !== undefined) {
+                    cleanDef = def["_"].slice(1).trim();
+                  } else if (typeof def === 'string') {
+                    cleanDef = def.slice(1).trim();
+                  } else {
+                    return;
+                  }
+                  if (cleanDef !== '' && cleanDef !== null){
+                    return cleanDef;
+                  } else {
+                    return;
+                  }
+                });
+              }else if (typeof definitionsSpagget == 'string') {
+                defs = [ definitionsSpagget] ;
+              }
               var mainDefinition = defs[0];
               defs.splice(0,1);
+              defs = defs.filter(filterDefs);
               entry = {
                 sanitizedw,
                 mainDefinition: mainDefinition,
@@ -122,7 +142,6 @@ function processForm(req, res){
         });
       });
     }))).then(results => {
-      console.info(results);
       var title = JSON.parse(fields.title)
       title.replace(/[^A-Za-z\s0-9!?]/g,'');
       var dataJson = {
@@ -132,11 +151,15 @@ function processForm(req, res){
       var filename = Math.random().toString(36).substring(2, 7);
       var filepath = "./data/sets/" + filename + ".json";
       var dataset = require("./data/sets.json");
-      dataset["files"].push(filename);
-      fs.writeFile("./data/sets.json", JSON.stringify(dataset), "utf8");
+      dataset["files"].push({
+        filename,
+        dateCreated: Date.now(),
+        title,
+        canStudy: true
+      });
+      fs.writeFile("./data/sets.json", JSON.stringify(dataset, null, '  '), "utf8");
       fs.writeFile(filepath, JSON.stringify(dataJson, null, '  '), "utf8");
-      console.info(dataJson);
-      res.write('http://localhost:3000/');
+      res.write('http://localhost:3000/sets');
       res.end();
     }).catch(err => {
       console.error(err);

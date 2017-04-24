@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+  head
+    title=Sets
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Arimo")
+    link(rel="stylesheet", href="../css/sets.css")
+  body
+    div.header
+      div.header-inner
+        div.title Sets
+        a.create-set(href="/") +
+    div.centerpiece
+      if !files.length
+        div.centerpiece-inner
+          div.no-sets You have no sets!
+      else
+        each set in files
+          div.set-outer(id=set.filename)
+            div.set-title #{set.title}
+            div.action-outer
+              a.action.delete(title="Delete Set") &#x2716;
+              a.action.study(title="Study Set") &#x1f441;
+              a.action.edit(title="Edit Set") &#x270E;

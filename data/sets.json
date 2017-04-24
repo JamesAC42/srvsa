@@ -1,1 +1,11 @@
-{"files":[]}
+{
+  "files": [
+    {
+      "filename": "522n1",
+      "dateCreated": 1493002937985,
+      "title": "adsfadsf",
+      "canStudy": true
+    }
+  ],
+  "filename": "./templates/sets.pug"
+}
