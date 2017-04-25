@@ -311,3 +311,21 @@ div.control-button:hover{
         transform:translate(-50%,-50%);
     }
 }
+
+@media screen and (max-height: 700px){
+    div.title-container{
+        top:4%;
+        width:40vw;
+    }
+    div.card{
+        height:45vh;
+        width:40vw;
+    }
+    div.progress-bar-outer{
+        top:75%;
+        width:40vw;
+    }
+    #controls{
+        height:120px;
+    }
+}

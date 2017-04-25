@@ -1,0 +1,25 @@
+doctype html
+head
+  title=title
+  link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo")
+  link(rel="stylesheet" href="../css/set.css")
+  script(src="../js/jquery-3.2.0.min.js")
+  script(src="../js/set.js")
+body
+  div.header-div
+    div.header-inner
+      div.title #{title}
+      a.home-button(href="/sets") All Sets
+      div.remove-set Remove
+  div.centerpiece
+   each word in words
+      div.word-outer
+        div.word #{word.sanitizedw}
+        div.word-definition
+          if word.hasDefinitions
+            div.word-definition-inner
+              div.main-definition 
+                span #{word.mainDefinition}
+          else
+            div.no-definition This word has no definitions!
+          div.delete-word

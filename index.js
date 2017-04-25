@@ -3,6 +3,7 @@ var fs = require("fs");
 var formidable = require("formidable");
 var path = require("path");
 var pug = require("pug");
+var url = require("url");
 var parseString = require('xml2js').parseString;
 
 var server = http.createServer(function(req, res){
@@ -22,7 +23,7 @@ function displayPage(req, res){
   if (filePath == '/') {
     filePath = '/newcards.html';
   }
-  let oldPath = filePath;
+  let oldPath = url.parse(filePath,true);
   filePath = __dirname+filePath;
   var extname = path.extname(filePath);
   var contentType = 'text/html';
@@ -34,24 +35,31 @@ function displayPage(req, res){
       contentType = 'text/css';
       break;
   }
-  if (oldPath == '/sets') {
+  if (oldPath.pathname == '/sets') {
     var setdata = require('./data/sets.json');
     let htmlrender = pug.renderFile('./templates/sets.pug', setdata);
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end(htmlrender, 'utf8');
+  } else if (oldPath.pathname == '/edit') {
+    var query = url.parse(req.url, true).query;
+    var fileName = query.set;
+    var wordsData = require('./data/sets/' + fileName + '.json');
+    let htmlrender = pug.renderFile('./templates/set.pug', wordsData);
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.end(htmlrender, 'utf8');
   } else {
     fs.exists(filePath, function(exists) {
         if (exists) {
-            fs.readFile(filePath, function(error, content) {
-                if (error) {
-                    res.writeHead(500);
-                    res.end();
-                }
-                else {                   
-                    res.writeHead(200, { 'Content-Type': contentType });
-                    res.end(content, 'utf8');                  
-                }
-            });
+          fs.readFile(filePath, function(error, content) {
+              if (error) {
+                  res.writeHead(500);
+                  res.end();
+              }
+              else {                   
+                  res.writeHead(200, { 'Content-Type': contentType });
+                  res.end(content, 'utf8');                  
+              }
+          });
         }
     });
   }
@@ -185,6 +193,7 @@ function deleteSet(req, res){
     files.splice(index, 1);
     let newSets = {files};
     fs.writeFile("./data/sets.json", JSON.stringify(newSets, null, '  '), "utf8");
+    fs.unlink("./data/sets/" + filename + ".json");
     res.write(filename.toString());
     res.end();
   })

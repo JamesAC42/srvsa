@@ -17,6 +17,8 @@ html(lang="en")
           div.no-sets You have no sets!
       else
         each set in files
+          div.centerpiece-inner.hidden
+            div.no-sets You have no sets!
           div.set-outer(id=set.filename)
             div.set-title #{set.title}
             div.set-info

@@ -1,0 +1,139 @@
+body{
+  background:#007acc;
+}
+div.header-div{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translate(-50%, 0);
+  height:20vh;
+  width:75vw;
+  background:#fff;
+  z-index:1000;
+  border-bottom: 4px solid #191E5A;
+}
+div.header-inner{
+  position:relative;
+  height:20vh;
+  width:75vw;
+  margin:0;
+  padding:0;
+}
+div.title{
+  position:absolute;
+  right:10%;
+  top:0;
+  height:20vh;
+  width:50%;
+  text-align: right;
+  line-height: 20vh;
+  font-family: 'Arimo', sans-serif;
+  font-size: 38px;
+  text-overflow:ellipsis;
+}
+a.home-button, div.remove-set{
+  display:block;
+  position:absolute;
+  height:60px;
+  width:120px;
+  top:50%;
+  left:10%;
+  transform: translate(0,-50%);
+  border-radius:20px;
+  background: #729AFF;
+  color: #fff;
+  line-height: 60px;
+  text-align:center;
+  font-size:24px;
+  font-family: 'Arimo', sans-serif;
+  text-decoration: none;
+  cursor:pointer;
+  transition: background .2s ease-in-out;
+}
+a.home-button:hover{
+  background: #4063BD;
+}
+div.home-button{
+  
+}
+div.remove-set{
+  
+}
+div.centerpiece{
+  position:absolute;
+  top:20vh;
+  left:50%;
+  width:75vw;
+  height:80vh;
+  transform: translate(-50%, 0);
+  background: #fff;
+  z-index:500;
+  overflow-y: scroll;
+}
+div.centerpiece::-webkit-scrollbar{
+  display:none;
+}
+div.word-outer{
+  position:relative;
+  float:left;
+  width:100%;
+  height:20vh;
+  margin:0;
+  padding:0;
+  border-bottom:2px solid #5B77DE;
+}
+div.word{
+  position:absolute;
+  top:0;
+  left:0;
+  height:20vh;
+  width:50%;
+  line-height:20vh;
+  text-align:center;
+  font-size:28px;
+  font-family: 'Arimo', sans-serif;
+  margin:0;
+  padding:0;
+  border-right:2px solid orange;
+}
+div.word-definition{
+  position:absolute;
+  top:0;
+  right:0;
+  height:20vh;
+  width:50%;
+  font-family: 'Arimo', sans-serif;
+  margin:0;
+  padding:0;
+}
+div.word-definition-inner{
+  position:relative;
+  height:20vh;
+  width:100%;
+  margin:0;
+  padding:0;
+  overflow-y:hidden;
+}
+div.main-definition{
+  position:absolute;
+  height:20vh;
+  width:95%;
+  line-height:20vh;
+  text-align:center;
+  top:0;
+  left:50%;
+  transform:translate(-50%,0);
+  margin:0;
+  padding:0;
+  z-index:100;
+}
+div.main-definition span{
+  padding:0 10px;
+  display: -moz-inline-box;
+  display: inline-block;  
+  text-align: center;
+  line-height: normal;
+  vertical-align: middle; 
+  font-family: 'Arimo', sans-serif;
+  font-size:20px;
+}
