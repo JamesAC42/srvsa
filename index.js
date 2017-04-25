@@ -14,6 +14,8 @@ var server = http.createServer(function(req, res){
       processForm(req, res);
     } else if (req.url === '/deleteset') {
       deleteSet(req, res);
+    } else if (req.url === '/deleteCard') {
+      deleteCard(req, res);
     }
   }
 });
@@ -135,9 +137,9 @@ function processForm(req, res){
               }else if (typeof definitionsSpagget == 'string') {
                 defs = [ definitionsSpagget] ;
               }
+              defs = defs.filter(filterDefs);
               var mainDefinition = defs[0];
               defs.splice(0,1);
-              defs = defs.filter(filterDefs);
               entry = {
                 sanitizedw,
                 mainDefinition: mainDefinition,
@@ -170,7 +172,7 @@ function processForm(req, res){
       });
       fs.writeFile("./data/sets.json", JSON.stringify(dataset, null, '  '), "utf8");
       fs.writeFile(filepath, JSON.stringify(dataJson, null, '  '), "utf8");
-      res.write('http://localhost:3000/sets');
+      res.write('http://localhost:3000/edit?set=' +filename);
       res.end();
     }).catch(err => {
       console.error(err);
@@ -195,6 +197,20 @@ function deleteSet(req, res){
     fs.writeFile("./data/sets.json", JSON.stringify(newSets, null, '  '), "utf8");
     fs.unlink("./data/sets/" + filename + ".json");
     res.write(filename.toString());
+    res.end();
+  })
+}
+
+function deleteCard(req, res) {
+  let form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields){
+    let filename = fields.file;
+    let set = require('./data/sets/' + filename + '.json');
+    let index = JSON.parse(fields.cardindex);
+    let words = set["words"];
+    words.splice(index, 1);
+    set["words"] = words;
+    fs.writeFile("./data/sets/" + filename + ".json", JSON.stringify(set, null,  '  '), "utf8");
     res.end();
   })
 }

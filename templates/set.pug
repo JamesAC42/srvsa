@@ -10,7 +10,7 @@ body
     div.header-inner
       div.title #{title}
       a.home-button(href="/sets") All Sets
-      div.remove-set Remove
+      a.remove-set(href="#") Remove
   div.centerpiece
    each word in words
       div.word-outer
@@ -23,3 +23,4 @@ body
           else
             div.no-definition This word has no definitions!
           div.delete-word
+        div.delete-word X
