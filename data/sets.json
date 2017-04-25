@@ -1,12 +1,32 @@
 {
   "files": [
     {
-      "filename": "cu2sr",
-      "dateCreated": 1493101938990,
-      "title": "vocab 12",
+      "filename": "huivn",
+      "dateCreated": 1493140026372,
+      "title": "Test",
       "totalCards": 10,
       "canStudy": true
+    },
+    {
+      "filename": "e96mg",
+      "dateCreated": 1493148214007,
+      "title": "title",
+      "totalCards": 5,
+      "canStudy": true
+    },
+    {
+      "filename": "7zgzs",
+      "dateCreated": 1493148455686,
+      "title": "title",
+      "totalCards": 6,
+      "canStudy": true
+    },
+    {
+      "filename": "wwtid",
+      "dateCreated": 1493154070915,
+      "title": "Testing words",
+      "totalCards": 5,
+      "canStudy": true
     }
-  ],
-  "filename": "./templates/sets.pug"
+  ]
 }

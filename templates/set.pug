@@ -1,6 +1,6 @@
 doctype html
-head
-  title=title
+head(lang="eng")
+  title #{title}
   link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo")
   link(rel="stylesheet" href="../css/set.css")
   script(src="../js/jquery-3.2.0.min.js")
@@ -11,6 +11,7 @@ body
       div.title #{title}
       a.home-button(href="/sets") All Sets
       a.remove-set(href="#") Remove
+      a.study-set(href="#") Study
   div.centerpiece
    each word in words
       div.word-outer

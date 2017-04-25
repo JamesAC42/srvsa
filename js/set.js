@@ -6,6 +6,7 @@ jQuery(function($){
         bindEvents: function(){
             $("div.delete-word").on("click", this.deleteCard.bind(this));
             $("a.remove-set").on("click", this.deleteSet.bind(this));
+            $("a.study-set").on("click", this.gotoStudy.bind(this));
         },
         getParameterByName: function(name, url) {
             if (!url) url = window.location.href;
@@ -26,6 +27,11 @@ jQuery(function($){
             } else {
               alert("You need at least 5 cards per set!");
             }
+        },
+        gotoStudy: function(){
+          let filename = this.getParameterByName("set");
+          document.location.href = "http://localhost:3000/study?set=" + filename;
+          return;
         },
         deleteSet: function(element){
           if (confirm("Are you sure you want to delete this set?")) {

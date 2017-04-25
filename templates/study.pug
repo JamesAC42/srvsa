@@ -1,0 +1,33 @@
+doctype html
+html(lang="en")
+  head
+    title #{title}
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo")
+    link(rel="stylesheet" href="../css/study.css")
+    script(src="../js/jquery-3.2.0.min.js")
+    script(src="../js/study.js")
+  body
+    div#card-amt #{words.length}
+    a#home-button(href="/sets") All Sets
+    a#edit-button(href="#") Edit Set
+    div.progress-bar-outer
+      div.progress-bar-inner
+    div.title-container
+      div.title-inner #{title}
+    div#cards
+      each word in words
+        div.card.right-card
+          div.card-inner
+            div.word #{word.sanitizedw}
+            div.definition 
+              span #{word.mainDefinition}
+    div#controls
+      div.control
+        div.control-button.direction.disabled#back &#x2770;
+          div.ff-move#ff-back &#x2770;&#x2770;
+      div.control
+        div.control-button#flip <>
+      div.control
+        div.control-button.direction#next &#x2771;
+          div.ff-move#ff-next &#x2771;&#x2771;
+

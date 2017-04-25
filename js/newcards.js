@@ -1,11 +1,11 @@
 jQuery(function($){
 
-    var TAB_KEY = 9;
-    var RIGHT_KEY = 39;
-    var LEFT_KEY = 37;
-    var ENTER_KEY = 13;
+    const TAB_KEY = 9;
+    const RIGHT_KEY = 39;
+    const LEFT_KEY = 37;
+    const ENTER_KEY = 13;
 
-    var CARD = "<div class='card added'><input type='text' tabindex='-1' maxlength='30'></div>";
+    const CARD = "<div class='card added'><input type='text' tabindex='-1' maxlength='30'></div>";
     
     var util = {
         store: function (namespace, data) {

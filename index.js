@@ -49,6 +49,13 @@ function displayPage(req, res){
     let htmlrender = pug.renderFile('./templates/set.pug', wordsData);
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.end(htmlrender, 'utf8');
+  } else if (oldPath.pathname === '/study') { 
+     var query = url.parse(req.url, true).query;
+     var filename = query.set;
+     var wordsData = require('./data/sets/' + filename + '.json');
+     let htmlrender = pug.renderFile('./templates/study.pug', wordsData);
+     res.writeHead(200, {'Content-Type': 'text/html'});
+     res.end(htmlrender, 'utf8');
   } else {
     fs.exists(filePath, function(exists) {
         if (exists) {
@@ -96,6 +103,7 @@ function processForm(req, res){
               return;
             }
             const entryList = result['entry_list'];
+            console.info(entryList);
             if (!entryList.entry) {
               if (entryList.suggestion) {
                 const suggestion = entryList.suggestion;

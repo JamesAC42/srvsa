@@ -1,0 +1,74 @@
+{
+  "title": "title",
+  "words": [
+    {
+      "sanitizedw": "name",
+      "mainDefinition": "a word or phrase that constitutes the distinctive designation of a person or thing",
+      "definitions": [
+        "a word or symbol used in logic to designate an entity",
+        "a descriptive often disparaging epithet",
+        "an illustrious record :",
+        "a person or thing with a reputation",
+        "appearance as opposed to reality",
+        "one referred to by a name"
+      ],
+      "hasDefinitions": true,
+      "suggestions": []
+    },
+    {
+      "sanitizedw": "name",
+      "mainDefinition": "a word or phrase that constitutes the distinctive designation of a person or thing",
+      "definitions": [
+        "a word or symbol used in logic to designate an entity",
+        "a descriptive often disparaging epithet",
+        "an illustrious record :",
+        "a person or thing with a reputation",
+        "appearance as opposed to reality",
+        "one referred to by a name"
+      ],
+      "hasDefinitions": true,
+      "suggestions": []
+    },
+    {
+      "sanitizedw": "test",
+      "mainDefinition": "a critical examination, observation, or evaluation :",
+      "definitions": [
+        "the procedure of submitting a statement to such conditions or operations as will lead to its proof or disproof or to its acceptance or rejection",
+        "a basis for evaluation :",
+        "an ordeal or oath required as proof of conformity with a set of beliefs",
+        ":a means of : as",
+        "a procedure, reaction, or reagent used to identify or characterize a substance or constituent",
+        "something (as a series of questions or exercises) for measuring the skill, knowledge, intelligence, capacities, or aptitudes of an individual or group",
+        "a positive result in such a test",
+        "a result or value determined by testing"
+      ],
+      "hasDefinitions": true,
+      "suggestions": []
+    },
+    {
+      "sanitizedw": "test",
+      "mainDefinition": "a critical examination, observation, or evaluation :",
+      "definitions": [
+        "the procedure of submitting a statement to such conditions or operations as will lead to its proof or disproof or to its acceptance or rejection",
+        "a basis for evaluation :",
+        "an ordeal or oath required as proof of conformity with a set of beliefs",
+        ":a means of : as",
+        "a procedure, reaction, or reagent used to identify or characterize a substance or constituent",
+        "something (as a series of questions or exercises) for measuring the skill, knowledge, intelligence, capacities, or aptitudes of an individual or group",
+        "a positive result in such a test",
+        "a result or value determined by testing"
+      ],
+      "hasDefinitions": true,
+      "suggestions": []
+    },
+    {
+      "sanitizedw": "computer",
+      "mainDefinition": "one that",
+      "definitions": [
+        "a programmable usually electronic device that can store, retrieve, and process data"
+      ],
+      "hasDefinitions": true,
+      "suggestions": []
+    }
+  ]
+}

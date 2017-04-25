@@ -31,37 +31,43 @@ div.title{
   font-size: 38px;
   text-overflow:ellipsis;
 }
-a.home-button, a.remove-set{
+a.home-button, a.remove-set, a.study-set{
   display:block;
   position:absolute;
-  height:60px;
-  width:120px;
+  height:50px;
+  width:100px;
   transform: translate(0,-50%);
   border-radius:20px;
   color: #fff;
-  line-height: 60px;
+  line-height: 50px;
   text-align:center;
-  font-size:24px;
+  font-size:20px;
   font-family: 'Arimo', sans-serif;
   text-decoration: none;
   cursor:pointer;
   transition: background .2s ease-in-out;
+  top:50%;
 }
 a.home-button{
   background: #729AFF;
-  top:50%;
-  left:10%;
+  left:80px;
 }
 a.remove-set{
   background: #FD5252;
-  top:50%;
-  left:30%;
+  left:190px;
+}
+a.study-set{
+  background: #47BBE6;
+  left:300px;
 }
 a.home-button:hover{
   background: #4063BD;
 }
 a.remove-set:hover{
   background: #DA3636;
+}
+a.study-set:hover{
+  background: #3690B2;
 }
 div.centerpiece{
   position:absolute;
