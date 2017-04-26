@@ -103,7 +103,6 @@ function processForm(req, res){
               return;
             }
             const entryList = result['entry_list'];
-            console.info(entryList);
             if (!entryList.entry) {
               if (entryList.suggestion) {
                 const suggestion = entryList.suggestion;
@@ -124,37 +123,54 @@ function processForm(req, res){
                 }
               }
             } else {
-              var definitionsSpagget = entryList.entry[0].def[0].dt;
-              let defs;
-              if(Array.isArray(definitionsSpagget)){
-                defs = definitionsSpagget.map(function(def){
-                  let cleanDef;
-                  if (typeof def === 'object' && def["_"] !== undefined) {
-                    cleanDef = def["_"].slice(1).trim();
-                  } else if (typeof def === 'string') {
-                    cleanDef = def.slice(1).trim();
-                  } else {
-                    return;
-                  }
-                  if (cleanDef !== '' && cleanDef !== null){
-                    return cleanDef;
-                  } else {
-                    return;
-                  }
-                });
-              }else if (typeof definitionsSpagget == 'string') {
-                defs = [ definitionsSpagget] ;
+              try {
+                var definitionsSpagget = entryList.entry[0].def[0].dt;
+                let defs;
+                if(Array.isArray(definitionsSpagget)){
+                  defs = definitionsSpagget.map(function(def){
+                    let cleanDef;
+                    if (typeof def === 'object' && def["_"] !== undefined) {
+                      cleanDef = def["_"].slice(1).trim();
+                      if (def["fw"] !== undefined) {
+                        cleanDef += " " + def["fw"];
+                      }
+                      if (def["sx"] !== undefined) {
+                        cleanDef += "; " + def["sx"];
+                      }
+                    } else if (typeof def === 'string') {
+                      cleanDef = def.slice(1).trim();
+                    } else {
+                      return;
+                    }
+                    if (cleanDef !== '' && cleanDef !== null){
+                      return cleanDef;
+                    } else {
+                      return;
+                    }
+                  });
+                }else if (typeof definitionsSpagget == 'string') {
+                  defs = [ definitionsSpagget] ;
+                }
+                defs = defs.filter(filterDefs);
+                var mainDefinition = defs[0];
+                defs.splice(0,1);
+                entry = {
+                  sanitizedw,
+                  mainDefinition: mainDefinition,
+                  definitions: defs,
+                  hasDefinitions: true,
+                  suggestions: []
+                };
+              } catch(err) {
+                entry = {
+                  sanitizedw,
+                  mainDefinition: '',
+                  definitions: [],
+                  hasDefinitions: false,
+                  suggestions: []
+                };
+                console.info(err);
               }
-              defs = defs.filter(filterDefs);
-              var mainDefinition = defs[0];
-              defs.splice(0,1);
-              entry = {
-                sanitizedw,
-                mainDefinition: mainDefinition,
-                definitions: defs,
-                hasDefinitions: true,
-                suggestions: []
-              };
             }
             done(entry);
           }); 
