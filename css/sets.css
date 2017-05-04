@@ -72,7 +72,7 @@ div.set-outer{
   width:95%;
   margin:0 auto;
   border-bottom:3px solid #35587F;
-  transition: border-color .1s ease-in-out;
+  transition: border-color .2s ease-in-out;
 } 
 div.set-outer:hover{
   border-color:#7FAEDF;
@@ -160,17 +160,47 @@ div.hidden{
   display:none;
 }
 @media screen and (max-height: 700px){
+  div.header{
+    height:15vh;
+  }
+  div.header-inner{
+    height:15vh;
+  }
+  div.centerpiece{
+    top:15vh;
+    height:85vh;
+  }
+  div.title{
+    height:15vh;
+    line-height: 15vh;
+    font-size:34px;
+  }
+  a.create-set{
+    height:40px;
+    width:80px;
+    border-radius:15px;
+    line-height: 40px;
+    font-size:20px;
+  }
   div.set-outer{
-    height:20vh;
+    height:15vh;
   }
   div.set-title{
-    top:4vh;
+    top:2vh;
+    font-size:24px;
+  }
+  div.set-info{
+    bottom:2vh;
+  }
+  div.set-date, div.set-cards{
+    font-size:16px;
   }
   div.action-outer{
-    height:20vh;
+    height:15vh;
   }
   a.action{
-    height:20vh;
-    line-height: 20vh;
+    height:15vh;
+    line-height: 15vh;
+    font-size:22px;
   }
 }

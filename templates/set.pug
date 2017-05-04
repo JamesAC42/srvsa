@@ -9,19 +9,61 @@ body
   div.header-div
     div.header-inner
       div.title #{title}
-      a.home-button(href="/sets") All Sets
-      a.remove-set(href="#") Remove
-      a.study-set(href="#") Study
+      a.nav-btn.home-button(href="/sets") All Sets
+      a.nav-btn.remove-set(href="#") Remove
+      a.nav-btn.study-set(href="#") Study
   div.centerpiece
-   each word in words
+    each word in words
       div.word-outer
         div.word #{word.sanitizedw}
         div.word-definition
           if word.hasDefinitions
             div.word-definition-inner
+              if word.definitions.length > 0
+                div.alt-defs
+                  ul
+                    each def in word.definitions
+                      li #{def}
               div.main-definition 
                 span #{word.mainDefinition}
+              div.new-def-button(title="New Definition") &#x270E;
           else
             div.no-definition This word has no definitions!
-          div.delete-word
-        div.delete-word X
+        div.delete-word &#x2716;
+    div.add-words-outer
+      div.add-words-button &#x271A;
+  div.add-definitions-modal
+    div.def-title-outer
+      div.def-title Edit definition for 
+        span  Vocab 
+      div.border-bottom
+      div.close-modal &#x2716;
+      div.submit.disabled &check;
+    div.def-defs-outer
+    div.custom-def-outer
+      textarea(placeholder="Enter your own definition")
+  div.screen-blur
+  div.new-word-container
+    div.new-word-container-inner
+      div.cards
+        form#cards-form
+          div.card
+            input(type="text" max-length="40")
+      div.close-new-word X
+      div#controls
+          div.control
+            div#back.control-button.direction.disabled &#x2770;
+              div#ff-back.ff-move &#x2770;&#x2770;
+          div.control
+            div#remove.control-button.edit.disabled &#x2716;
+          div.control
+            div#create.control-button.disabled &#x2714;
+          div.control
+            div#add.control-button.edit &#x270E;
+          div.control
+            div#next.control-button.direction.disabled &#x2771;
+              div#ff-next.ff-move &#x2771;&#x2771;
+      div#card-amt
+      div.progress-bar-outer
+        div.progress-bar-inner
+

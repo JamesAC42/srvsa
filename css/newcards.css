@@ -15,6 +15,29 @@ body{
     font-size:22px;
     color:#fff;
 }
+#all-sets{
+    display: block;
+    position: absolute;
+    height: 50px;
+    width: 100px;
+    top: 40px;
+    left:80px;
+    transform: translate(0,-50%);
+    border-radius: 20px;
+    color: #fff;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Arimo', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+    background:#5A9EF9;
+    transition:all .2s ease-in-out;
+}
+#all-sets:hover{
+    background:#316CBB;
+}
 div.error{
     position:absolute;
     top:0;
@@ -182,7 +205,7 @@ div.right-card{
 	transform:translate(100vw,-50%);
 }
 div.left-card{
-	transform:translate(-100vw, -50%)
+	transform:translate(-100vw, -50%);
 }
 div.above-card{
 	transform:translate(-50%, -100vh);
@@ -277,7 +300,7 @@ div.ff-move{
     width:60px;
     color:#000;
     font-size: 40px;
-    line-height: 50px;
+    line-height: 48px;
     text-align:center;
     font-family:monospace,sans-serif;
     border-radius:20px;

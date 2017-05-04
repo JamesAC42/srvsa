@@ -1,10 +1,10 @@
-var http = require("http");
-var fs = require("fs");
-var formidable = require("formidable");
-var path = require("path");
-var pug = require("pug");
-var url = require("url");
-var parseString = require('xml2js').parseString;
+const http = require("http");
+const fs = require("fs");
+const formidable = require("formidable");
+const path = require("path");
+const pug = require("pug");
+const url = require("url");
+const parseString = require('xml2js').parseString;
 
 var server = http.createServer(function(req, res){
   if (req.method.toLowerCase() === 'get'){
@@ -16,6 +16,10 @@ var server = http.createServer(function(req, res){
       deleteSet(req, res);
     } else if (req.url === '/deleteCard') {
       deleteCard(req, res);
+    } else if (req.url === '/changeDef') {
+      editDefinition(req, res);
+    } else if (req.url === '/addNewCards') {
+      addNewCards(req,res);
     }
   }
 });
@@ -82,108 +86,15 @@ function processForm(req, res){
     });
     var words = JSON.parse(fields.words);
     words = words.filter(filterWords);
-    Promise.all(words.map(sanitizedw => new Promise ((done, reject) => {
-      sanitizedw = sanitizedw.replace(/[^a-zA-Z/s]/g,'').trim();
-      var encodedw = encodeURIComponent(sanitizedw);
-      var wpath = '/api/v1/references/collegiate/xml/' + encodedw + '?key=ef9d9b7a-b5fd-493f-8962-d8b89d1e4ba8';
-      var options = {
-          host: 'www.dictionaryapi.com',
-          path: wpath
-      };
-      http.get(options, function (http_res) {
-        var data = "";
-        http_res.on("data", function (chunk) {
-            data += chunk;
-        });
-        http_res.on("end", function () {
-          parseString(data, function(err, result) {
-            let entry;
-            if (err) {
-              reject(err);
-              return;
-            }
-            const entryList = result['entry_list'];
-            if (!entryList.entry) {
-              if (entryList.suggestion) {
-                const suggestion = entryList.suggestion;
-                entry = {
-                  sanitizedw,
-                  mainDefinition: '',
-                  definitions: [],
-                  hasDefinitions: false,
-                  suggestions: Array.isArray(suggestion) ? suggestion : [ suggestion ]
-                }
-              } else {
-                entry = {
-                  sanitizedw,
-                  mainDefinition: '',
-                  definitions: [],
-                  hasDefinitions: false,
-                  suggestions: []
-                }
-              }
-            } else {
-              try {
-                var definitionsSpagget = entryList.entry[0].def[0].dt;
-                let defs;
-                if(Array.isArray(definitionsSpagget)){
-                  defs = definitionsSpagget.map(function(def){
-                    let cleanDef;
-                    if (typeof def === 'object' && def["_"] !== undefined) {
-                      cleanDef = def["_"].slice(1).trim();
-                      if (def["fw"] !== undefined) {
-                        cleanDef += " " + def["fw"];
-                      }
-                      if (def["sx"] !== undefined) {
-                        cleanDef += "; " + def["sx"];
-                      }
-                    } else if (typeof def === 'string') {
-                      cleanDef = def.slice(1).trim();
-                    } else {
-                      return;
-                    }
-                    if (cleanDef !== '' && cleanDef !== null){
-                      return cleanDef;
-                    } else {
-                      return;
-                    }
-                  });
-                }else if (typeof definitionsSpagget == 'string') {
-                  defs = [ definitionsSpagget] ;
-                }
-                defs = defs.filter(filterDefs);
-                var mainDefinition = defs[0];
-                defs.splice(0,1);
-                entry = {
-                  sanitizedw,
-                  mainDefinition: mainDefinition,
-                  definitions: defs,
-                  hasDefinitions: true,
-                  suggestions: []
-                };
-              } catch(err) {
-                entry = {
-                  sanitizedw,
-                  mainDefinition: '',
-                  definitions: [],
-                  hasDefinitions: false,
-                  suggestions: []
-                };
-                console.info(err);
-              }
-            }
-            done(entry);
-          }); 
-        });
-      });
-    }))).then(results => {
+    getDefsFromWords(words).then(results => {
+      var defList = results;
       var title = JSON.parse(fields.title)
       title.replace(/[^A-Za-z\s0-9!?]/g,'');
       var dataJson = {
         title,
-        words: results
+        words: defList
       };
-      var totalCards = results.length;
+      var totalCards = defList.length;
       var filename = Math.random().toString(36).substring(2, 7);
       var filepath = "./data/sets/" + filename + ".json";
       var dataset = require("./data/sets.json");
@@ -202,6 +113,169 @@ function processForm(req, res){
       console.error(err);
     });
   });
+}
+
+function addNewCards(req, res){
+  var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files){
+    res.writeHead(200, {
+      'content-type':'text/plain'
+    });
+    var filename = fields.filename;
+    var words = JSON.parse(fields.words);
+    words = words.filter(filterWords);
+    getDefsFromWords(words).then(results => {
+      var defList = results;
+      var totalCards = defList.length;
+      var filepath = "./data/sets/" + filename + ".json";
+      var set = require(filepath);
+      var wordsList = set["words"];
+      defList.forEach(function(item, index){
+        wordsList.push(item);
+      });
+      fs.writeFile(filepath, JSON.stringify(set, null, '  '), "utf8");
+      var setList = require("./data/sets.json");
+      setList["files"].forEach(function(item, index){
+        if(item["filename"] == filename){
+          item["totalCards"] = item["totalCards"] + totalCards;
+        }
+      });
+      fs.writeFile('./data/sets.json', JSON.stringify(setList, null, '  '), "utf8");
+
+      res.write(JSON.stringify(defList));
+      res.end();
+    }).catch(err => {
+      console.error(err);
+    });
+  });
+}
+
+function getDefsFromWords(words){
+  return Promise.all(words.map(sanitizedw => new Promise ((done, reject) => {
+    sanitizedw = sanitizedw.replace(/[^a-zA-Z/s]/g,'').trim();
+    var encodedw = encodeURIComponent(sanitizedw);
+    var wpath = '/api/v1/references/collegiate/xml/' + encodedw + '?key=ef9d9b7a-b5fd-493f-8962-d8b89d1e4ba8';
+    var options = {
+        host: 'www.dictionaryapi.com',
+        path: wpath
+    };
+    http.get(options, function (http_res) {
+      var data = "";
+      http_res.on("data", function (chunk) {
+          data += chunk;
+      });
+      http_res.on("end", function () {
+        parseString(data, function(err, result) {
+          let entry;
+          if (err) {
+            reject(err);
+            return;
+          }
+          const entryList = result['entry_list'];
+          if (!entryList.entry) {
+            if (entryList.suggestion) {
+              const suggestion = entryList.suggestion;
+              entry = {
+                sanitizedw,
+                mainDefinition: '',
+                definitions: [],
+                hasDefinitions: false,
+                suggestions: Array.isArray(suggestion) ? suggestion : [ suggestion ]
+              }
+            } else {
+              entry = {
+                sanitizedw,
+                mainDefinition: '',
+                definitions: [],
+                hasDefinitions: false,
+                suggestions: []
+              }
+            }
+          } else {
+            try {
+              var definitionsSpagget = entryList.entry[0].def[0].dt;
+              let defs;
+              if(Array.isArray(definitionsSpagget)){
+                defs = definitionsSpagget.map(function(def){
+                  let cleanDef;
+                  if (typeof def === 'object' && def["_"] !== undefined) {
+                    cleanDef = def["_"].slice(1).trim();
+                    if (def["fw"] !== undefined) {
+                      if (typeof def["fw"] === 'object' && def["fw"]["_"] !== undefined) {
+                        cleanDef += " " + def["fw"]["_"];
+                      } else if (typeof def["fw"] == 'string') {
+                        cleanDef += " " + def["fw"];
+                      }
+                    }
+                    if (def["sx"] !== undefined) {
+                      if (typeof def["sx"] === 'object' && def["sx"]["_"] !== undefined) {
+                        cleanDef += " " + def["sx"]["_"];
+                      } else if (typeof def["sx"] == 'string') {
+                        cleanDef += " " + def["sx"];
+                      }  
+                    }
+                    if (def["d_link"] !== undefined) {
+                      if (typeof def["d_link"] === 'object' && def["d_link"]["_"] !== undefined) {
+                        cleanDef += " " + def["d_link"]["_"];
+                      } else if (typeof def["d_link"] == 'string') {
+                        cleanDef += " " + def["d_link"];
+                      }  
+                    }
+                    if (def["un"] !== undefined) {
+                      if (typeof(def["un"]) == 'string') {
+                        cleanDef += def["un"];
+                      } else if (typeof def["un"] == 'object') {
+                        cleanDef += def["un"]["_"];
+                      }
+                    }
+                  } else if (typeof def === 'string') {
+                    cleanDef = def.slice(1).trim();
+                  } else {
+                    return;
+                  }
+                  if (cleanDef !== '' && cleanDef !== null){
+                    return cleanDef;
+                  } else {
+                    return;
+                  }
+                });
+              }else if (typeof definitionsSpagget == 'string') {
+                defs = [ definitionsSpagget] ;
+              }
+              defs = defs.filter(filterDefs);
+              var mainDefinition = defs[0];
+              entry = {
+                sanitizedw,
+                mainDefinition: mainDefinition,
+                definitions: defs,
+                hasDefinitions: true,
+                suggestions: []
+              };
+            } catch(err) {
+              entry = {
+                sanitizedw,
+                mainDefinition: '',
+                definitions: [],
+                hasDefinitions: false,
+                suggestions: []
+              };
+              console.info(err);
+            }
+          }
+          done(entry);
+        }); 
+      });
+    });
+  })));
+}
+
+function appendInnerTag(object, tagName, string){
+  if (typeof object[tagName] === 'object' && object[tagName]["_"] !== undefined) {
+    string += " " + object[tagName]["_"];
+  } else if (typeof object[tagName] == 'string') {
+    string += " " + object[tagName];
+  }
+  return string;
 }
 
 function deleteSet(req, res){
@@ -235,12 +309,40 @@ function deleteCard(req, res) {
     words.splice(index, 1);
     set["words"] = words;
     fs.writeFile("./data/sets/" + filename + ".json", JSON.stringify(set, null,  '  '), "utf8");
+    
+    let sets = require('./data/sets.json');
+    let files = sets["files"];
+    files.forEach(function(item, index){
+      if(item["filename"] === filename){
+        item["totalCards"] = item["totalCards"] - 1;
+      }
+    });
+    let newsets = {files};
+    fs.writeFile("./data/sets.json", JSON.stringify(newsets, null, '  '), "utf8");
     res.end();
   })
 }
 
+function editDefinition(req, res){
+  let form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields){
+    let filename = fields.file;
+    let set = require('./data/sets/' + filename + '.json');
+    let word = fields.word;
+    let definition = fields.definition;
+    let words = set["words"];
+    for(let i = 0; i < words.length; i++){
+      if (words[i]["sanitizedw"] == word){
+        words[i]["mainDefinition"] = definition;
+      }
+    }
+    fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8");
+    res.end();
+  });
+}
+
 function filterDefs(input){
-  return typeof input === "string";
+  return typeof input === "string" && input !== "";
 }
 
 function filterWords(input){

@@ -1,0 +1,113 @@
+{
+  "title": "suggestion test",
+  "words": [
+    {
+      "sanitizedw": "adf",
+      "mainDefinition": "utomatic direction finder",
+      "definitions": [
+        "utomatic direction finder"
+      ],
+      "hasDefinitions": true,
+      "suggestions": []
+    },
+    {
+      "sanitizedw": "kaekd",
+      "mainDefinition": "",
+      "definitions": [],
+      "hasDefinitions": false,
+      "suggestions": [
+        "keek",
+        "kaka",
+        "kayak",
+        "kike",
+        "Keuka",
+        "kyack",
+        "ked",
+        "cake",
+        "khaki",
+        "kedge",
+        "kook",
+        "shake",
+        "ket-",
+        "Kidd",
+        "cade",
+        "Koko",
+        "Kedah",
+        "kick",
+        "shade",
+        "kulak"
+      ]
+    },
+    {
+      "sanitizedw": "oeixm",
+      "mainDefinition": "",
+      "definitions": [],
+      "hasDefinitions": false,
+      "suggestions": [
+        "oxime",
+        "exam",
+        "axiom",
+        "Axum",
+        "deism",
+        "exon",
+        "egoism",
+        "Oxon",
+        "exine",
+        "Exuma",
+        "exhume",
+        "ageism",
+        "Ixion",
+        "auxin",
+        "axon",
+        "Taoism",
+        "disme",
+        "desm-",
+        "axion",
+        "Qeshm"
+      ]
+    },
+    {
+      "sanitizedw": "pqokd",
+      "mainDefinition": "",
+      "definitions": [],
+      "hasDefinitions": false,
+      "suggestions": [
+        "packed",
+        "picked",
+        "peaked",
+        "Updike",
+        "potted",
+        "paddock",
+        "piddock",
+        "pocket",
+        "pagoda",
+        "pitted",
+        "pikake",
+        "uptake",
+        "hapkido",
+        "picot",
+        "pitot",
+        "pokeweed",
+        "packet",
+        "picket",
+        "pye-dog",
+        "peacock"
+      ]
+    },
+    {
+      "sanitizedw": "quidxka",
+      "mainDefinition": "",
+      "definitions": [],
+      "hasDefinitions": false,
+      "suggestions": [
+        "quixote",
+        "quickset",
+        "quixotic",
+        "Quedas",
+        "quick fix",
+        "quicksand",
+        "quickstep"
+      ]
+    }
+  ]
+}
