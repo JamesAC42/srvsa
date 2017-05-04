@@ -6,14 +6,6 @@
       "title": "AP Comp. Sci",
       "totalCards": 13,
       "canStudy": true
-    },
-    {
-      "filename": "ny37a",
-      "dateCreated": 1493874726570,
-      "title": "suggestion test",
-      "totalCards": 5,
-      "canStudy": true
     }
-  ],
-  "filename": "./templates/sets.pug"
+  ]
 }
