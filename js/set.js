@@ -25,7 +25,7 @@ jQuery(function($) {
             $("a.remove-set").on("click", this.deleteSet.bind(this));
             $("a.study-set").on("click", this.gotoStudy.bind(this));
             $("div.new-def-button").on("click", this.openDefOptions.bind(this));
-            $("div.close-modal").on("click", this.closeDefOptions.bind(this));
+            $("div.close-definitions").on("click", this.closeDefOptions.bind(this));
             $("div.screen-blur").on("click", this.closeDefOptions.bind(this));
             $("div.def-defs-outer").on("click", "div.def-def-inner", this.selectNewDef.bind(this));
             $("div.submit").on("click", this.submitCustomDef.bind(this));

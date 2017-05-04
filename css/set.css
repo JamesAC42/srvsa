@@ -288,6 +288,9 @@ div.def-title{
 div.def-title span{
   color: #358AE2;
 }
+div.suggestion-title span{
+  color: #FD4B4B;
+}
 div.close-modal{
   position: absolute;
   top: 5px;

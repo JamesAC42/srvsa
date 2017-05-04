@@ -35,13 +35,20 @@ body
   div.add-definitions-modal
     div.def-title-outer
       div.def-title Edit definition for 
-        span  Vocab 
+        span  word
       div.border-bottom
-      div.close-modal &#x2716;
+      div.close-modal.close-definitions &#x2716;
       div.submit.disabled &check;
     div.def-defs-outer
     div.custom-def-outer
       textarea(placeholder="Enter your own definition")
+  div.suggest-word-modal
+    div.def-title-outer
+      div.def-title.suggestion-title Suggestions for 
+        span word
+    div.border-bottom
+      div.close-modal.close-suggestions &#x2716;
+    div.suggestions-outer
   div.screen-blur
   div.new-word-container
     div.new-word-container-inner
