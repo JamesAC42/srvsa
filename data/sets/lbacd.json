@@ -3,7 +3,7 @@
  "words": [
   {
    "sanitizedw": "rabbits",
-   "mainDefinition": ":any of a family (Leporidae) of long-eared short-tailed lagomorph mammals with long hind legs:",
+   "mainDefinition": ":any of various lagomorphs that are born furless, blind, and helpless, that are sometimes gregarious, and that include especially the cottontails of the New World and a small Old World mammal () that is the source of various domestic breeds",
    "definitions": [
     ":any of a family (Leporidae) of long-eared short-tailed lagomorph mammals with long hind legs:",
     ":any of various lagomorphs that are born furless, blind, and helpless, that are sometimes gregarious, and that include especially the cottontails of the New World and a small Old World mammal () that is the source of various domestic breeds",
@@ -137,7 +137,7 @@
   },
   {
    "sanitizedw": "regular",
-   "mainDefinition": "belonging to a religious order",
+   "mainDefinition": ":thinking or behaving in an acceptable, normal, or agreeable manner",
    "definitions": [
     "belonging to a religious order",
     "formed, built, arranged, or ordered according to some established rule, law, principle, or type",
@@ -274,30 +274,59 @@
    "suggestions": []
   },
   {
-   "sanitizedw": "abiding",
-   "mainDefinition": ":; enduring; continuing",
+   "sanitizedw": "sodoff",
+   "mainDefinition": ":; scram; usually used as a command",
    "definitions": [
-    ":; enduring; continuing"
+    ":; scram; usually used as a command"
    ],
    "hasDefinitions": true,
    "suggestions": []
   },
   {
-   "sanitizedw": "afford",
-   "mainDefinition": ":to be able to bear the cost of",
+   "sanitizedw": "languid",
+   "mainDefinition": ":drooping or flagging from or as if from exhaustion :; weak",
    "definitions": [
-    ":to manage to bear without serious detriment",
-    ":to be able to bear the cost of",
-    ":to make available, give forth, or provide naturally or inevitably"
+    ":drooping or flagging from or as if from exhaustion :; weak",
+    ":sluggish in character or disposition :; listless",
+    ":lacking force or quickness of movement :; slow"
    ],
    "hasDefinitions": true,
    "suggestions": []
   },
   {
-   "sanitizedw": "Staffa",
-   "mainDefinition": "islet  Scotland in the Inner Hebrides  of Mull",
+   "sanitizedw": "wrathful",
+   "mainDefinition": "arising from, marked by, or indicative of wrath",
    "definitions": [
-    "islet  Scotland in the Inner Hebrides  of Mull"
+    ":filled with  :; irate",
+    "arising from, marked by, or indicative of wrath"
+   ],
+   "hasDefinitions": true,
+   "suggestions": []
+  },
+  {
+   "sanitizedw": "abashed",
+   "mainDefinition": ":to destroy the self-possession or self-confidence of :; disconcert",
+   "definitions": [
+    ":to destroy the self-possession or self-confidence of :; disconcert"
+   ],
+   "hasDefinitions": true,
+   "suggestions": []
+  },
+  {
+   "sanitizedw": "whew",
+   "mainDefinition": ":a whistling sound or a sound like a half-formed whistle uttered as an exclamation; used interjectionally chiefly to express amazement, discomfort, or relief",
+   "definitions": [
+    ":a whistling sound or a sound like a half-formed whistle uttered as an exclamation; used interjectionally chiefly to express amazement, discomfort, or relief"
+   ],
+   "hasDefinitions": true,
+   "suggestions": []
+  },
+  {
+   "sanitizedw": "nautilus",
+   "mainDefinition": ":any of a genus () of cephalopod mollusks of the South Pacific and Indian oceans with a spiral chambered shell that is pearly on the inside",
+   "definitions": [
+    ":any of a genus () of cephalopod mollusks of the South Pacific and Indian oceans with a spiral chambered shell that is pearly on the inside",
+    ":; paper nautilus"
    ],
    "hasDefinitions": true,
    "suggestions": []
