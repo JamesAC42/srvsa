@@ -13,6 +13,7 @@ jQuery(function($) {
             this.cardamt = 1;
             this.filename = this.getParameterByName("set");
             this.optionsVisible = false;
+            this.suggestionsVisible = false;
             this.addWordsVisible = false;
             this.bindEvents();
             this.render();
@@ -25,9 +26,12 @@ jQuery(function($) {
             $("a.remove-set").on("click", this.deleteSet.bind(this));
             $("a.study-set").on("click", this.gotoStudy.bind(this));
             $("div.new-def-button").on("click", this.openDefOptions.bind(this));
+            $("div.show-suggestions").on("click", this.openSuggestions.bind(this));
             $("div.close-definitions").on("click", this.closeDefOptions.bind(this));
-            $("div.screen-blur").on("click", this.closeDefOptions.bind(this));
+            $("div.close-suggestions").on("click", this.closeSuggestions.bind(this));
+            $("div.screen-blur").on("click", this.closeModal.bind(this));
             $("div.def-defs-outer").on("click", "div.def-def-inner", this.selectNewDef.bind(this));
+            $("div.suggestions-outer").on("click", "div.suggestions-inner", this.selectSuggestion.bind(this));
             $("div.submit").on("click", this.submitCustomDef.bind(this));
             $("textarea").on("keydown", this.render.bind(this));
             $("div.add-words-button").on("click", this.toggleAddWords.bind(this));
@@ -76,7 +80,6 @@ jQuery(function($) {
             let word = $(element.target).parent().parent().parent().children("div.word").text();
             $("div.def-title span").text(word);
             $("div.centerpiece").addClass("center-noscroll");
-            $("div.new-def-button").removeClass("def-btn-enabled");
             $("div.add-definitions-modal").addClass("def-modal-visible");
             $("div.screen-blur").addClass("blur-enabled");
             let $wordDefInner = $(element.target).parent();
@@ -95,12 +98,49 @@ jQuery(function($) {
           if (this.optionsVisible) {
             this.optionsVisible = false;
             $("div.centerpiece").removeClass("center-noscroll");
-            $("div.new-def-button").addClass("def-btn-enabled")
             $("div.add-definitions-modal").removeClass("def-modal-visible");
             $("div.screen-blur").removeClass("blur-enabled");
             $("div.def-def-inner").remove();
           } else {
             return;
+          }
+        },
+        openSuggestions: function(element){
+          if (!this.suggestionsVisible) {
+            this.suggestionsVisible = true;
+            let word =$(element.target).parent().parent().parent().children("div.word").text();
+            $("div.suggestion-title span").text(word);
+            $("div.centerpiece").addClass("center-noscroll");
+            $("div.suggest-word-modal").addClass("suggest-modal-visible");
+            $("div.screen-blur").addClass("blur-enabled");
+            if ($(element.target).siblings("div.word-suggestion").length) {
+              $(element.target).siblings("div.word-suggestion").children("ul").children("li").each(function(item){
+                $("div.suggestions-outer").append("<div class='suggestions-inner'><span class='suggestions-choice'>" + $(this).text() + "</span></div>");
+              });
+            } else {
+              $("div.suggestions-outer").append("<div class='inner-no-suggestion'><span class='suggestions-choice'>No suggestions, your typo is too weird.</span></div>");
+            }
+          } else {
+            return;
+          }
+        },
+        closeSuggestions: function(element){
+          if (this.suggestionsVisible) {
+            this.suggestionsVisible = false;
+            $("div.centerpiece").removeClass("center-noscroll");
+            $("div.suggest-word-modal").removeClass("suggest-modal-visible");
+            $("div.screen-blur").removeClass("blur-enabled");
+            $("div.suggestions-inner").remove();
+          } else {
+            return;
+          }
+        },
+        closeModal: function(){
+          if (this.suggestionsVisible){
+            this.closeSuggestions();
+          }
+          if (this.optionsVisible){
+            this.closeDefOptions();
           }
         },
         deleteSet: function(element) {
@@ -111,6 +151,57 @@ jQuery(function($) {
             });
             return;
           }
+        },
+        selectSuggestion: function(element){
+          let suggestion;
+          var filename = this.filename;
+          if ($(element.target).prop("tagName") === "SPAN") {
+            suggestion = $(element.target).text();
+          } else {
+            suggestion = $(element.target).children("span").text();
+          }
+          let word = $("div.suggestion-title span").text();
+          $.post("/editWord", {file:filename, suggestion, word}, success => {
+            let item = JSON.parse(success);
+            $("div.word").each(function(index){
+              if ($(this).text() == word) {
+                $(this).text(item["sanitizedw"]);
+                $(this).siblings("div.word-definition").remove();
+                let cardString = "<div class='word-definition'>";
+                if(item["hasDefinitions"]){
+                  cardString += "<div class='word-definition-inner'>";
+                  if(item["definitions"].length > 0){
+                    cardString += "<div class='alt-defs'><ul>";
+                    item["definitions"].forEach(function(item, index){                  
+                      cardString += "<li>" + item + "</li>";
+                    });
+                    cardString += "</ul></div>";
+                  };
+                  cardString += "<div class='main-definition'>" + 
+                    "<span>" + item["mainDefinition"] + "</span></div>" + 
+                    "<div class='card-edit-btn new-def-button' title='New Definition'>&#x270E;</div>" + 
+                    "</div>";
+                } else {
+                  cardString += "<div class='no-definition'>This word has no definitions!" + 
+                    "<div class='card-edit-btn show-suggestions' title='Suggestions'>&#x270E;</div>";
+                  if (item["suggestions"].length > 0) {
+                    cardString += "<div class='word-suggestion'><ul>";
+                    item["suggestions"].forEach(function(item, index){
+                      cardString += "<li>" + item + "</li>";
+                    });
+                    cardString += "</ul></div>";
+                  }
+                  cardString += "</div>";
+                }
+                cardString += "</div><div class='delete-word'>&#x2716;</div>";
+                $(cardString).insertAfter($(this));
+              };
+            });
+            $("div.delete-word").on("click", this.deleteCard.bind(this));
+            $("div.show-suggestions").on("click", this.openSuggestions.bind(this));
+            $("div.new-def-button").on("click", this.openDefOptions.bind(this));
+          });
+          this.closeSuggestions();
         },
         selectNewDef: function(element) {
           let definition;
@@ -129,7 +220,7 @@ jQuery(function($) {
               }
             });
             this.closeDefOptions();
-          })
+          });
         },
         submitCustomDef: function() {
           let definition = $("div.custom-def-outer textarea").val().trim();
@@ -315,15 +406,25 @@ jQuery(function($) {
               };
               cardString += "<div class='main-definition'>" + 
                 "<span>" + item["mainDefinition"] + "</span></div>" + 
-                "<div class='new-def-button' title='New Definition'>&#x270E;</div>" + 
+                "<div class='card-edit-btn new-def-button' title='New Definition'>&#x270E;</div>" + 
                 "</div>";
             }else{
-              cardString += "<div class='no-definition'>This word has no definitions!</div>"
+              cardString += "<div class='no-definition'>This word has no definitions!" + 
+                "<div class='card-edit-btn show-suggestions' title='Suggestions'>&#x270E;</div>";
+              if (item["suggestions"].length > 0) {
+                cardString += "<div class='word-suggestion'><ul>";
+                item["suggestions"].forEach(function(item, index){
+                  cardString += "<li>" + item + "</li>";
+                });
+                cardString += "</ul></div>";
+              }
+              cardString += "</div>";
             }
             cardString += "</div><div class='delete-word'>&#x2716;</div></div>";
             $(cardString).insertAfter($("div.word-outer:last"));
           });
           $("div.delete-word").on("click", this.deleteCard.bind(this));
+           $("div.show-suggestions").on("click", this.openSuggestions.bind(this));
           $("div.new-def-button").on("click", this.openDefOptions.bind(this));
         },
         clearNewCards: function(){
@@ -335,15 +436,15 @@ jQuery(function($) {
           this.render();
         },
         submitSet: function() {
-            if (this.canSubmit()) {
-                $.post("/addNewCards", {filename: this.filename, words: JSON.stringify(this.cards)}, success => {
-                  if (this.addWordsVisible) {
-                    this.toggleAddWords();
-                  }
-                  this.loadCards(JSON.parse(success));
-                  this.clearNewCards();
-                });
-            }
+          if (this.canSubmit()) {
+              $.post("/addNewCards", {filename: this.filename, words: JSON.stringify(this.cards)}, success => {
+                if (this.addWordsVisible) {
+                  this.toggleAddWords();
+                }
+                this.loadCards(JSON.parse(success));
+                this.clearNewCards();
+              });
+          }
         },
         render: function() {
           if ($("textarea").val().trim() === '') {

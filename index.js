@@ -20,6 +20,8 @@ var server = http.createServer(function(req, res){
       editDefinition(req, res);
     } else if (req.url === '/addNewCards') {
       addNewCards(req,res);
+    } else if (req.url === '/editWord') {
+      editWord(req, res);
     }
   }
 });
@@ -199,7 +201,11 @@ function getDefsFromWords(words){
                 defs = definitionsSpagget.map(function(def){
                   let cleanDef;
                   if (typeof def === 'object' && def["_"] !== undefined) {
-                    cleanDef = def["_"].slice(1).trim();
+                    if(def["_"].charAt(0) === ";"){
+                      cleanDef = def["_"].slice(1).trim();
+                    } else {
+                      cleanDef = def["_"].trim();
+                    }
                     if (def["fw"] !== undefined) {
                       if (typeof def["fw"] === 'object' && def["fw"]["_"] !== undefined) {
                         cleanDef += " " + def["fw"]["_"];
@@ -212,7 +218,11 @@ function getDefsFromWords(words){
                         cleanDef += " " + def["sx"]["_"];
                       } else if (typeof def["sx"] == 'string') {
                         cleanDef += " " + def["sx"];
-                      }  
+                      } else if (Array.isArray(def["sx"])) {
+                        def["sx"].forEach(function(item,index){
+                          cleanDef += "; " + item;
+                        });
+                      }
                     }
                     if (def["d_link"] !== undefined) {
                       if (typeof def["d_link"] === 'object' && def["d_link"]["_"] !== undefined) {
@@ -222,10 +232,29 @@ function getDefsFromWords(words){
                       }  
                     }
                     if (def["un"] !== undefined) {
-                      if (typeof(def["un"]) == 'string') {
+                      cleanDef += "; "
+                      if (typeof def["un"] === 'string') {
                         cleanDef += def["un"];
-                      } else if (typeof def["un"] == 'object') {
+                      } else if (typeof def["un"] === 'object' && def["un"]["_"] !== undefined) {
                         cleanDef += def["un"]["_"];
+                      } else if (Array.isArray(def["un"])) {
+                        if (typeof def["un"][0] === 'string') {
+                          cleanDef += def["un"][0];
+                        } else if (typeof def["un"][0] === 'object' && def["un"][0]["_"] !== undefined) {
+                          cleanDef += def["un"][0]["_"];
+                        }
+                      }
+                    }
+                  } else if (typeof def === 'object') {
+                    if (def["un"] !== undefined) {
+                      if (Array.isArray(def["un"])) {
+                        if (typeof def["un"][0] === 'object' && def["un"][0]["_"] !== undefined){
+                          cleanDef = def["un"][0]["_"].trim();
+                        } else if (typeof def["un"][0] === 'string') {
+                          cleanDef = def["un"][0].trim();
+                        }
+                      } else if (typeof def["un"] === 'string') {
+                        cleanDef = def["un"].trim();
                       }
                     }
                   } else if (typeof def === 'string') {
@@ -338,6 +367,30 @@ function editDefinition(req, res){
     }
     fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8");
     res.end();
+  });
+}
+
+function editWord(req, res) {
+  let form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields) {
+    let filename = fields.file;
+    let set = require('./data/sets/' + filename + '.json');
+    let word = fields.word;
+    let suggestion = [fields.suggestion];
+    getDefsFromWords(suggestion).then(results => {
+      let defList = results;
+      let newWordItem = defList[0];
+      set["words"].forEach(function(item, index) {
+        if (item["sanitizedw"] == word) {
+          set["words"][index] = newWordItem;
+        }
+      });
+      fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8");
+      res.write(JSON.stringify(newWordItem));
+      res.end();
+    }).catch(err => {
+      console.error(err);
+    });
   });
 }
 

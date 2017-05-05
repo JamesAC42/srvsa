@@ -1,11 +1,12 @@
 {
   "files": [
     {
-      "filename": "21dfr",
-      "dateCreated": 1493874281883,
-      "title": "AP Comp. Sci",
-      "totalCards": 13,
+      "filename": "lbacd",
+      "dateCreated": 1494011170667,
+      "title": "vocab set",
+      "totalCards": 20,
       "canStudy": true
     }
-  ]
+  ],
+  "filename": "./templates/sets.pug"
 }

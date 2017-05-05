@@ -26,9 +26,15 @@ body
                       li #{def}
               div.main-definition 
                 span #{word.mainDefinition}
-              div.new-def-button(title="New Definition") &#x270E;
+              div.card-edit-btn.new-def-button(title="New Definition") &#x270E;
           else
             div.no-definition This word has no definitions!
+              div.card-edit-btn.show-suggestions(title="Suggestions") &#x270E;
+              if word.suggestions.length > 0
+                div.word-suggestion
+                  ul
+                    each suggestion in word.suggestions
+                      li #{suggestion}
         div.delete-word &#x2716;
     div.add-words-outer
       div.add-words-button &#x271A;
@@ -43,10 +49,10 @@ body
     div.custom-def-outer
       textarea(placeholder="Enter your own definition")
   div.suggest-word-modal
-    div.def-title-outer
-      div.def-title.suggestion-title Suggestions for 
+    div.suggestion-title-outer
+      div.suggestion-title Suggestions for 
         span word
-    div.border-bottom
+      div.border-bottom
       div.close-modal.close-suggestions &#x2716;
     div.suggestions-outer
   div.screen-blur
