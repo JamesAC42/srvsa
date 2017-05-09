@@ -154,7 +154,7 @@ function addNewCards(req, res){
 
 function getDefsFromWords(words){
   return Promise.all(words.map(sanitizedw => new Promise ((done, reject) => {
-    sanitizedw = sanitizedw.replace(/[^a-zA-Z/s]/g,'').trim();
+    sanitizedw = sanitizedw.replace(/[^a-zA-Z ]/g,'').trim();
     var encodedw = encodeURIComponent(sanitizedw);
     var wpath = '/api/v1/references/collegiate/xml/' + encodedw + '?key=ef9d9b7a-b5fd-493f-8962-d8b89d1e4ba8';
     var options = {
@@ -211,17 +211,29 @@ function getDefsFromWords(words){
                         cleanDef += " " + def["fw"]["_"];
                       } else if (typeof def["fw"] == 'string') {
                         cleanDef += " " + def["fw"];
+                      } else if (Array.isArray(def["fw"])) {
+                        if (typeof def["fw"][0] == 'string') {
+                          cleanDef += " " + def["fw"][0];
+                        }
                       }
                     }
                     if (def["sx"] !== undefined) {
                       if (typeof def["sx"] === 'object' && def["sx"]["_"] !== undefined) {
                         cleanDef += " " + def["sx"]["_"];
                       } else if (typeof def["sx"] == 'string') {
-                        cleanDef += " " + def["sx"];
+                        cleanDef += "; " + def["sx"];
                       } else if (Array.isArray(def["sx"])) {
-                        def["sx"].forEach(function(item,index){
-                          cleanDef += "; " + item;
-                        });
+                        if(typeof def["sx"][0] === 'object'){
+                          if (typeof def["sx"][0]["_"] !== undefined) {
+                            cleanDef += "; " + def["sx"][0]["_"];
+                          }
+                        } else {
+                          def["sx"].forEach(function(item,index){
+                            if (typeof item == 'string') {
+                              cleanDef += "; " + item;
+                            }
+                          });
+                        }
                       }
                     }
                     if (def["d_link"] !== undefined) {

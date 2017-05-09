@@ -4,7 +4,21 @@
       "filename": "lbacd",
       "dateCreated": 1494011170667,
       "title": "vocab set",
-      "totalCards": 24,
+      "totalCards": 28,
+      "canStudy": true
+    },
+    {
+      "filename": "eybkj",
+      "dateCreated": 1494250628535,
+      "title": "test",
+      "totalCards": 14,
+      "canStudy": true
+    },
+    {
+      "filename": "z3sz0",
+      "dateCreated": 1494251760060,
+      "title": "test",
+      "totalCards": 7,
       "canStudy": true
     }
   ],

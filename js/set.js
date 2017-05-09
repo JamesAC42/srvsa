@@ -88,7 +88,7 @@ jQuery(function($) {
                 $("div.def-defs-outer").append("<div class='def-def-inner'><span class='def-choice'>" + $(this).text() + "</span></div>");
               });
             } else {
-              $("div.def-defs-outer").append("<div class='def-def-inner'><span class='def-choice'>Word has no alternate definitions.</span></div>");
+              $("div.def-defs-outer").append("<div class='no-alt-def-inner'><span class='def-choice'>Word has no alternate definitions.</span></div>");
             }
           } else {
             return;
@@ -101,6 +101,7 @@ jQuery(function($) {
             $("div.add-definitions-modal").removeClass("def-modal-visible");
             $("div.screen-blur").removeClass("blur-enabled");
             $("div.def-def-inner").remove();
+            $("div.no-alt-def-inner").remove();
           } else {
             return;
           }
@@ -131,6 +132,7 @@ jQuery(function($) {
             $("div.suggest-word-modal").removeClass("suggest-modal-visible");
             $("div.screen-blur").removeClass("blur-enabled");
             $("div.suggestions-inner").remove();
+            $("div.inner-no-suggestion").remove();
           } else {
             return;
           }

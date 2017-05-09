@@ -364,7 +364,7 @@ div.def-defs-outer, div.suggestions-outer{
 div.suggestions-outer{
   height:85vh;
 }
-div.def-def-inner, div.suggestions-inner, div.inner-no-suggestion{
+div.def-def-inner, div.suggestions-inner, div.inner-no-suggestion, div.no-alt-def-inner{
   position: relative;
   height: 20vh;
   width: 100%;
@@ -380,6 +380,15 @@ div.def-def-inner, div.suggestions-inner, div.inner-no-suggestion{
 }
 div.def-def-inner::-webkit-scrollbar{
   display: none;
+}
+div.inner-no-suggestion::-webkit-scrollbar{
+  display: none;
+}
+div.no-alt-def-inner::-webkit-scrollbar{
+  display: none;
+}
+div.inner-no-suggestion, div.no-alt-def-inner{
+  cursor: default;
 }
 div.suggestions-inner::-webkit-scrollbar{
   display: none;
