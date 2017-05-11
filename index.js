@@ -107,8 +107,8 @@ function processForm(req, res){
         totalCards,
         canStudy: true
       });
-      fs.writeFile("./data/sets.json", JSON.stringify(dataset, null, '  '), "utf8", callback=>{return;});
-      fs.writeFile(filepath, JSON.stringify(dataJson, null, '  '), "utf8", callback=>{return;});
+      fs.writeFile("./data/sets.json", JSON.stringify(dataset, null, '  '), "utf8", callback=>{return});
+      fs.writeFile(filepath, JSON.stringify(dataJson, null, '  '), "utf8", callback=>{return});
       res.write('http://localhost:3000/edit?set=' +filename);
       res.end();
     }).catch(err => {
@@ -135,14 +135,14 @@ function addNewCards(req, res){
       defList.forEach(function(item, index){
         wordsList.push(item);
       });
-      fs.writeFile(filepath, JSON.stringify(set, null, '  '), "utf8", callback=>{return;});
+      fs.writeFile(filepath, JSON.stringify(set, null, '  '), "utf8", callback=>{return});
       var setList = require("./data/sets.json");
       setList["files"].forEach(function(item, index){
         if(item["filename"] == filename){
           item["totalCards"] = item["totalCards"] + totalCards;
         }
       });
-      fs.writeFile('./data/sets.json', JSON.stringify(setList, null, '  '), "utf8", callback=>{return;});
+      fs.writeFile('./data/sets.json', JSON.stringify(setList, null, '  '), "utf8", callback=>{return});
 
       res.write(JSON.stringify(defList));
       res.end();
@@ -332,8 +332,8 @@ function deleteSet(req, res){
     }
     files.splice(index, 1);
     let newSets = {files};
-    fs.writeFile("./data/sets.json", JSON.stringify(newSets, null, '  '), "utf8", callback=>{return;});
-    fs.unlink("./data/sets/" + filename + ".json");
+    fs.writeFile("./data/sets.json", JSON.stringify(newSets, null, '  '), "utf8", callback=>{return});
+    fs.unlink("./data/sets/" + filename + ".json", callback=>{return});
     res.write(filename.toString());
     res.end();
   })
@@ -348,7 +348,7 @@ function deleteCard(req, res) {
     let words = set["words"];
     words.splice(index, 1);
     set["words"] = words;
-    fs.writeFile("./data/sets/" + filename + ".json", JSON.stringify(set, null,  '  '), "utf8", callback=>{return;});
+    fs.writeFile("./data/sets/" + filename + ".json", JSON.stringify(set, null,  '  '), "utf8", callback=>{return});
     
     let sets = require('./data/sets.json');
     let files = sets["files"];
@@ -358,7 +358,7 @@ function deleteCard(req, res) {
       }
     });
     let newsets = {files};
-    fs.writeFile("./data/sets.json", JSON.stringify(newsets, null, '  '), "utf8", callback=>{return;});
+    fs.writeFile("./data/sets.json", JSON.stringify(newsets, null, '  '), "utf8", callback=>{return});
     res.end();
   })
 }
@@ -376,7 +376,7 @@ function editDefinition(req, res){
         words[i]["mainDefinition"] = definition;
       }
     }
-    fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8", callback=>{return;});
+    fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8", callback=>{return});
     res.end();
   });
 }
@@ -396,7 +396,7 @@ function editWord(req, res) {
           set["words"][index] = newWordItem;
         }
       });
-      fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8", callback=>{return;});
+      fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8", callback=>{return});
       res.write(JSON.stringify(newWordItem));
       res.end();
     }).catch(err => {
