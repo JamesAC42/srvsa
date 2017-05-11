@@ -82,6 +82,7 @@ div.centerpiece{
   transform: translate(-50%, 0);
   z-index: 500;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 div.centerpiece::-webkit-scrollbar{
   display: none;
@@ -467,14 +468,14 @@ div.new-word-container-inner{
 }
 div.card{
   position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%,-50%);
   height: 40vh;
   width: 45vw;
   max-height:300px;
   max-width: 600px;
   background: #fff;
+  top:45%;
+  left:50%;
+  transform: translate(-50%,0);
   -webkit-box-shadow: 2px 6px 44px -15px rgba(0,0,0,0.75);
   -moz-box-shadow: 2px 6px 44px -15px rgba(0,0,0,0.75);
   box-shadow: 2px 6px 44px -15px rgba(0,0,0,0.75);
@@ -487,10 +488,10 @@ div.added{
   animation:recoil .2s ease-in-out;
 }
 div.right-card{
-  transform:translate(100vw,-50%);
+  transform:translate(100vw, 0);
 }
 div.left-card{
-  transform:translate(-100vw, -50%)
+  transform:translate(-100vw, 0);
 }
 div.close-new-word{
   position: absolute;
@@ -545,9 +546,9 @@ div.card input{
 }
 div.progress-bar-outer{
   position:absolute;
-  top:70%;
-  left:50%;
-  transform:translate(-50%,-50%);
+  bottom:30vh;
+  left:50vw;
+  transform:translate(-50%,400%);
   height:30px;
   width:45vw;
   max-width:600px;
@@ -566,7 +567,7 @@ div.progress-bar-inner{
   transition: all .2s ease-in-out;
 }
 div.progress-bar-complete{
-    background: rgba(0, 230, 115, 1);
+  background: rgba(0, 230, 115, 1);
 }
 #controls{
   position:absolute;
@@ -644,7 +645,7 @@ div.ff-move{
   width:60px;
   color:#000;
   font-size: 40px;
-  line-height: 48px;
+  line-height: 49px;
   text-align:center;
   font-family:monospace,sans-serif;
   border-radius:20px;
@@ -667,15 +668,65 @@ div.control-button:hover{
 #next:hover #ff-next{
   transform:translate(20%,-50%);
 }
+.loading-screen{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  height:100vh;
+  width:100vw;
+  margin:0;
+  padding:0;
+  background:rgba(0,0,0,.6);
+  transform:translate(100vw,0);
+  z-index:8000;
+}
+.loading-screen-visible{
+  transform: translate(0,0);
+}
+.loading-container{
+  position: absolute;
+  height:50px;
+  width:50px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+.circle{
+    position:absolute;
+    height:20px;
+    width:20px;
+    border-radius:50px;
+    top:0;
+    left:0;
+    transform:translate(-50%,-50%);
+    background: #fff;
+    animation: spin 1s infinite;
+}
+.first .circle:last-child{
+    animation-delay: .5s;
+}
+@keyframes spin{
+    25%{
+      transform:translate(20px,-50%);
+    }
+    50%{
+        transform:translate(20px,100%);
+    }
+    75%{
+        transform:translate(-50%,100%);
+    }
+}
 @keyframes recoil{
   50%{
-      transform:translate(-20%,-50%);
+      transform:translate(-20%, 0);
   }
   75%{
-      transform:translate(-40%,-50%);
+      transform:translate(-40%, 0);
   }
   100%{
-      transform:translate(-50%,-50%);
+      transform:translate(-50%,0);
   }
 }
 @media screen and (max-height: 700px){

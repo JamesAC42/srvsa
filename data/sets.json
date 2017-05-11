@@ -1,26 +1,18 @@
 {
   "files": [
     {
-      "filename": "lbacd",
-      "dateCreated": 1494011170667,
-      "title": "vocab set",
-      "totalCards": 28,
+      "filename": "fx4gl",
+      "dateCreated": 1494339688049,
+      "title": "sat words a-e",
+      "totalCards": 100,
       "canStudy": true
     },
     {
-      "filename": "eybkj",
-      "dateCreated": 1494250628535,
+      "filename": "sbjrb",
+      "dateCreated": 1494478190885,
       "title": "test",
-      "totalCards": 14,
-      "canStudy": true
-    },
-    {
-      "filename": "z3sz0",
-      "dateCreated": 1494251760060,
-      "title": "test",
-      "totalCards": 7,
+      "totalCards": 42,
       "canStudy": true
     }
-  ],
-  "filename": "./templates/sets.pug"
+  ]
 }

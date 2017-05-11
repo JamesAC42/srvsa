@@ -192,7 +192,7 @@ jQuery(function($){
                 if(val !== ''){
                     validamt++;
                 }
-            });
+            }); 
             var submitbool = (validamt >= 5) && (this.title !== '');
             return(submitbool);
         },
@@ -202,6 +202,7 @@ jQuery(function($){
         submitSet: function(){
             this.title = $('div.title-container input').val().trim();
             if(this.canSubmit()){
+                $("div.loading-screen").addClass("loading-screen-visible");
                 $.post("/", {title: JSON.stringify(this.title), words: JSON.stringify(this.cards)}, data=>document.location.href = data);
             } else {
                 if (!this.title == ''){

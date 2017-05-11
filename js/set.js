@@ -359,9 +359,9 @@ jQuery(function($) {
         },
         cardMove: function(e) {
             var focus = this.focus;
-            if (!$('div.card input').is(':focus') && !$('div.title-container input').is(':focus') && $("textarea").is("focus")) {
+            if (!$('div.card input').is(':focus') && !$("textarea").is(':focus')) {
                 if (e.which !== ENTER_KEY && e.which !== RIGHT_KEY && e.which !== LEFT_KEY) {
-                    return false;
+                    return;
                 } else {
                     if (e.which == ENTER_KEY) {
                         if (e.shiftKey) {
@@ -374,7 +374,7 @@ jQuery(function($) {
                     }else if (e.which = LEFT_KEY) {
                         this.prevCard();
                     } else {
-                        return false;
+                        return;
                     }
                 }
             } else {
@@ -439,7 +439,9 @@ jQuery(function($) {
         },
         submitSet: function() {
           if (this.canSubmit()) {
+              $("div.loading-screen").addClass("loading-screen-visible");
               $.post("/addNewCards", {filename: this.filename, words: JSON.stringify(this.cards)}, success => {
+                $("div.loading-screen-visible").removeClass("loading-screen-visible");
                 if (this.addWordsVisible) {
                   this.toggleAddWords();
                 }

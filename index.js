@@ -107,8 +107,8 @@ function processForm(req, res){
         totalCards,
         canStudy: true
       });
-      fs.writeFile("./data/sets.json", JSON.stringify(dataset, null, '  '), "utf8");
-      fs.writeFile(filepath, JSON.stringify(dataJson, null, '  '), "utf8");
+      fs.writeFile("./data/sets.json", JSON.stringify(dataset, null, '  '), "utf8", callback=>{return;});
+      fs.writeFile(filepath, JSON.stringify(dataJson, null, '  '), "utf8", callback=>{return;});
       res.write('http://localhost:3000/edit?set=' +filename);
       res.end();
     }).catch(err => {
@@ -135,14 +135,14 @@ function addNewCards(req, res){
       defList.forEach(function(item, index){
         wordsList.push(item);
       });
-      fs.writeFile(filepath, JSON.stringify(set, null, '  '), "utf8");
+      fs.writeFile(filepath, JSON.stringify(set, null, '  '), "utf8", callback=>{return;});
       var setList = require("./data/sets.json");
       setList["files"].forEach(function(item, index){
         if(item["filename"] == filename){
           item["totalCards"] = item["totalCards"] + totalCards;
         }
       });
-      fs.writeFile('./data/sets.json', JSON.stringify(setList, null, '  '), "utf8");
+      fs.writeFile('./data/sets.json', JSON.stringify(setList, null, '  '), "utf8", callback=>{return;});
 
       res.write(JSON.stringify(defList));
       res.end();
@@ -201,11 +201,7 @@ function getDefsFromWords(words){
                 defs = definitionsSpagget.map(function(def){
                   let cleanDef;
                   if (typeof def === 'object' && def["_"] !== undefined) {
-                    if(def["_"].charAt(0) === ";"){
-                      cleanDef = def["_"].slice(1).trim();
-                    } else {
-                      cleanDef = def["_"].trim();
-                    }
+                    cleanDef = def["_"].trim();
                     if (def["fw"] !== undefined) {
                       if (typeof def["fw"] === 'object' && def["fw"]["_"] !== undefined) {
                         cleanDef += " " + def["fw"]["_"];
@@ -270,7 +266,7 @@ function getDefsFromWords(words){
                       }
                     }
                   } else if (typeof def === 'string') {
-                    cleanDef = def.slice(1).trim();
+                    cleanDef = def.trim();
                   } else {
                     return;
                   }
@@ -284,6 +280,9 @@ function getDefsFromWords(words){
                 defs = [ definitionsSpagget] ;
               }
               defs = defs.filter(filterDefs);
+              defs = defs.map(item=>{
+                return item.replace(/:/g,"");
+              });
               var mainDefinition = defs[0];
               entry = {
                 sanitizedw,
@@ -333,7 +332,7 @@ function deleteSet(req, res){
     }
     files.splice(index, 1);
     let newSets = {files};
-    fs.writeFile("./data/sets.json", JSON.stringify(newSets, null, '  '), "utf8");
+    fs.writeFile("./data/sets.json", JSON.stringify(newSets, null, '  '), "utf8", callback=>{return;});
     fs.unlink("./data/sets/" + filename + ".json");
     res.write(filename.toString());
     res.end();
@@ -349,7 +348,7 @@ function deleteCard(req, res) {
     let words = set["words"];
     words.splice(index, 1);
     set["words"] = words;
-    fs.writeFile("./data/sets/" + filename + ".json", JSON.stringify(set, null,  '  '), "utf8");
+    fs.writeFile("./data/sets/" + filename + ".json", JSON.stringify(set, null,  '  '), "utf8", callback=>{return;});
     
     let sets = require('./data/sets.json');
     let files = sets["files"];
@@ -359,7 +358,7 @@ function deleteCard(req, res) {
       }
     });
     let newsets = {files};
-    fs.writeFile("./data/sets.json", JSON.stringify(newsets, null, '  '), "utf8");
+    fs.writeFile("./data/sets.json", JSON.stringify(newsets, null, '  '), "utf8", callback=>{return;});
     res.end();
   })
 }
@@ -377,7 +376,7 @@ function editDefinition(req, res){
         words[i]["mainDefinition"] = definition;
       }
     }
-    fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8");
+    fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8", callback=>{return;});
     res.end();
   });
 }
@@ -397,7 +396,7 @@ function editWord(req, res) {
           set["words"][index] = newWordItem;
         }
       });
-      fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8");
+      fs.writeFile('./data/sets/' + filename + '.json', JSON.stringify(set, null, ' '), "utf8", callback=>{return;});
       res.write(JSON.stringify(newWordItem));
       res.end();
     }).catch(err => {
