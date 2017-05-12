@@ -6,6 +6,13 @@
       "title": "vocab set",
       "totalCards": 24,
       "canStudy": true
+    },
+    {
+      "filename": "16waf",
+      "dateCreated": 1494033363085,
+      "title": "Testing",
+      "totalCards": 6,
+      "canStudy": true
     }
   ],
   "filename": "./templates/sets.pug"

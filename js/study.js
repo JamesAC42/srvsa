@@ -66,17 +66,20 @@ jQuery(function($){
         	let $cardinner = $('div.card:nth-child(' + this.focus + ')').children('div.card-inner');
         	let $definition = $cardinner.children('div.definition');
         	let $word = $cardinner.children('div.word');
+            let $star = $cardinner.children('div.star-outer');
         	if ($definition.hasClass("visible")){
         		$cardinner.parent().removeClass("flip");
         		setTimeout(function(){
         			$definition.removeClass("visible");
         			$word.removeClass("invisible");
+                    $star.removeClass("star-flip");
         		},150);
         	} else {
         		$cardinner.parent().addClass("flip");
         		setTimeout(function(){
 	        		$definition.addClass("visible");
 	        		$word.addClass("invisible");
+                    $star.addClass("star-flip");
         		},150);
         	}
         },

@@ -1,0 +1,105 @@
+{
+ "title": "Testing",
+ "words": [
+  {
+   "sanitizedw": "test",
+   "mainDefinition": "an ordeal or oath required as proof of conformity with a set of beliefs",
+   "definitions": [
+    ":; cupel",
+    ":a critical examination, observation, or evaluation :; trial",
+    ":the procedure of submitting a statement to such conditions or operations as will lead to its proof or disproof or to its acceptance or rejection",
+    ":a basis for evaluation :; criterion",
+    "an ordeal or oath required as proof of conformity with a set of beliefs",
+    ":a means of : as",
+    "a procedure, reaction, or reagent used to identify or characterize a substance or constituent",
+    "something (as a series of questions or exercises) for measuring the skill, knowledge, intelligence, capacities, or aptitudes of an individual or group",
+    "a positive result in such a test",
+    "a result or value determined by testing",
+    ":; test match"
+   ],
+   "hasDefinitions": true,
+   "suggestions": []
+  },
+  {
+   "sanitizedw": "word",
+   "mainDefinition": "something that is said",
+   "definitions": [
+    "something that is said",
+    ":; talk; discourse",
+    "the text of a vocal musical composition",
+    ":a brief remark or conversation",
+    "a speech sound or series of speech sounds that symbolizes and communicates a meaning usually without being divisible into smaller units capable of independent use",
+    "the entire set of linguistic forms produced by combining a single base with various inflectional elements without change in the part of speech elements",
+    ":a written or printed character or combination of characters representing a spoken word; sometimes used with the first letter of a real or pretended taboo word prefixed as an often humorous euphemism  ",
+    "any segment of written or printed discourse ordinarily appearing between spaces or between a space and a punctuation mark",
+    "a number of bytes processed as a unit and conveying a quantum of information in communication and computer work",
+    ":; order; command",
+    ":; logos",
+    ":; [object Object]",
+    "the expressed or manifested mind and will of God",
+    ":; news; information",
+    ":; rumor",
+    "the act of speaking or of making verbal communication",
+    ":; saying; proverb",
+    ":; promise; declaration",
+    ":a quarrelsome utterance or conversation; usually used in plural ",
+    ":a verbal signal :; password",
+    "used interjectionally to express agreement"
+   ],
+   "hasDefinitions": true,
+   "suggestions": []
+  },
+  {
+   "sanitizedw": "card",
+   "mainDefinition": ":to cleanse, disentangle, and collect together (as fibers) by the use of  preparatory to spinning",
+   "definitions": [
+    ":to cleanse, disentangle, and collect together (as fibers) by the use of  preparatory to spinning"
+   ],
+   "hasDefinitions": true,
+   "suggestions": []
+  },
+  {
+   "sanitizedw": "program",
+   "mainDefinition": "a public notice",
+   "definitions": [
+    "a public notice",
+    "a brief usually printed outline of the order to be followed, of the features to be presented, and the persons participating (as in a public performance)",
+    "the performance of a program",
+    "a performance broadcast on radio or television",
+    "a plan or system under which action may be taken toward a goal",
+    ":; curriculum",
+    ":; prospectus; syllabus",
+    ":a plan for the  of a mechanism (as a computer)",
+    "a sequence of coded instructions that can be inserted into a mechanism (as a computer)",
+    "a sequence of coded instructions (as genes or behavioral responses) that is part of an organism"
+   ],
+   "hasDefinitions": true,
+   "suggestions": []
+  },
+  {
+   "sanitizedw": "post",
+   "mainDefinition": "a football passing play in which the receiver runs downfield before turning towards the middle of the field",
+   "definitions": [
+    ":a piece (as of timber or metal) fixed firmly in an upright position especially as a stay or support :; pillar; column",
+    "a pole or stake set up to mark or indicate something",
+    "a pole that marks the starting or finishing point of a horse race",
+    "a metallic fitting attached to an electrical device (as a storage battery) for convenience in making connections",
+    ":; goalpost",
+    "a football passing play in which the receiver runs downfield before turning towards the middle of the field",
+    "the metal stem of a pierced earring"
+   ],
+   "hasDefinitions": true,
+   "suggestions": []
+  },
+  {
+   "sanitizedw": "Geiger",
+   "mainDefinition": "an instrument for detecting the presence and intensity of radiations (as cosmic rays or particles from a radioactive substance) by means of their ionizing effect on an enclosed gas which results in a pulse that is amplified and fed to a device giving a visible or audible indication",
+   "definitions": [
+    "an instrument for detecting the presence and intensity of radiations (as cosmic rays or particles from a radioactive substance) by means of their ionizing effect on an enclosed gas which results in a pulse that is amplified and fed to a device giving a visible or audible indication"
+   ],
+   "hasDefinitions": true,
+   "suggestions": []
+  }
+ ],
+ "filename": "./templates/set.pug"
+}
