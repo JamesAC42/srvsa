@@ -23,6 +23,7 @@ jQuery(function($){
             this.cards = util.store('application-cards');
             this.cardamt = 1;
             this.focus = 1;
+            this.isUrban = false;
             this.title = '';
             this.bindEvents();
             this.render();
@@ -39,6 +40,7 @@ jQuery(function($){
             $('#ff-next').on('click', this.gotoLast.bind(this));
             $('#ff-back').on('click', this.gotoFirst.bind(this));
             $('#hide-error').on('click', this.hideModal.bind(this));
+            $('div.toggle-urban-switch').on('click', this.toggleUrban.bind(this));
             $('form')
                 .on('keydown', 'input', this.cardLog.bind(this))
                 .on('keyup', 'input', this.wordLog.bind(this));
@@ -63,6 +65,23 @@ jQuery(function($){
             this.cards = cards;
             this.focus = focus;
             this.render();
+        },
+        toggleUrban: function(element){
+            this.isUrban = !this.isUrban;
+            console.log(this.isUrban);
+            if($(element.target).hasClass("urban-on")){
+                $(element.target).removeClass("urban-on");
+                window.setTimeout(function(){
+                    $("div.toggle-urban-outer").attr("title", "Standard Definitions")
+                        .removeClass("switch-outer-on");
+                },100);
+            }else{
+                $(element.target).addClass("urban-on");
+                window.setTimeout(function(){
+                    $("div.toggle-urban-outer").attr("title", "Urban Definitions")
+                        .addClass("switch-outer-on");
+                },100);
+            }
         },
         removeCard: function(){
             var focus = this.focus;
@@ -203,7 +222,7 @@ jQuery(function($){
             this.title = $('div.title-container input').val().trim();
             if(this.canSubmit()){
                 $("div.loading-screen").addClass("loading-screen-visible");
-                $.post("/", {title: JSON.stringify(this.title), words: JSON.stringify(this.cards)}, data=>document.location.href = data);
+                $.post("/", {title: JSON.stringify(this.title), urbanDefs: JSON.stringify(this.isUrban), words: JSON.stringify(this.cards)}, data=>document.location.href = data);
             } else {
                 if (!this.title == ''){
                     $('div.message').text("You need at least 5 valid cards to create a set.")

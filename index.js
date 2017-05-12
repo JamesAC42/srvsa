@@ -87,8 +87,10 @@ function processForm(req, res){
       'content-type': 'text/plain'
     });
     var words = JSON.parse(fields.words);
+    var isUrban = JSON.parse(fields.urbanDefs);
     words = words.filter(filterWords);
-    getDefsFromWords(words).then(results => {
+    var defFromWords = isUrban ? getUrbanDefsFromWords(words) : getDefsFromWords(words);
+    defFromWords.then(results => {
       var defList = results;
       var title = JSON.parse(fields.title)
       title.replace(/[^A-Za-z\s0-9!?]/g,'');
@@ -124,9 +126,11 @@ function addNewCards(req, res){
       'content-type':'text/plain'
     });
     var filename = fields.filename;
+    var isUrban = JSON.parse(fields.urbanDefs);
     var words = JSON.parse(fields.words);
     words = words.filter(filterWords);
-    getDefsFromWords(words).then(results => {
+    var defFromWords = isUrban ? getUrbanDefsFromWords(words) : getDefsFromWords(words);
+    defFromWords.then(results => {
       var defList = results;
       var totalCards = defList.length;
       var filepath = "./data/sets/" + filename + ".json";
@@ -152,6 +156,60 @@ function addNewCards(req, res){
   });
 }
 
+function getUrbanDefsFromWords(words){
+  return Promise.all(words.map(sanitizedw => new Promise ((done, reject) => {
+    sanitizedw = sanitizedw.replace(/[^a-zA-Z ]/g,'').trim();
+    var encodedw = encodeURIComponent(sanitizedw);
+    var wpath = '/v0/define?term=' + encodedw;
+    var options = {
+      host: 'api.urbandictionary.com',
+      path: wpath
+    };
+    http.get(options, function(http_res) {
+      var data = "";
+      http_res.on("data", function (chunk) {
+        data += chunk;
+      });
+      http_res.on("end", function() {
+        let result = JSON.parse(data);
+        let entry;
+        if (result["result_type"] == "exact") {
+          try {
+            var defSpagget = result["list"];
+            var defs = defSpagget.map(item=>{
+              return item["definition"];
+            });
+            entry = {
+              sanitizedw,
+              mainDefinition: defs[0],
+              definitions: defs,
+              hasDefinitions: true,
+              suggestions: []
+            }
+          } catch(err) {
+            entry = {
+              sanitizedw,
+              mainDefinition: '',
+              definitions: [],
+              hasDefinitions: false,
+              suggestions: []
+            }
+          }
+        } else if (result["none"]) {
+          entry = {
+            sanitizedw,
+            mainDefinition: '',
+            definitions: [],
+            hasDefinitions: false,
+            suggestions: []
+          }
+        }
+        done(entry);
+      });
+    });
+  })));
+}
+
 function getDefsFromWords(words){
   return Promise.all(words.map(sanitizedw => new Promise ((done, reject) => {
     sanitizedw = sanitizedw.replace(/[^a-zA-Z ]/g,'').trim();
@@ -169,10 +227,11 @@ function getDefsFromWords(words){
       http_res.on("end", function () {
         parseString(data, function(err, result) {
           let entry;
+          /*
           if (err) {
             reject(err);
             return;
-          }
+          } */
           const entryList = result['entry_list'];
           if (!entryList.entry) {
             if (entryList.suggestion) {

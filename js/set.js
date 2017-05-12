@@ -11,6 +11,7 @@ jQuery(function($) {
             this.cards = [];
             this.focus = 1;
             this.cardamt = 1;
+            this.isUrban = false;
             this.filename = this.getParameterByName("set");
             this.optionsVisible = false;
             this.suggestionsVisible = false;
@@ -43,6 +44,7 @@ jQuery(function($) {
             $('#create').on('click', this.submitSet.bind(this));
             $('#ff-next').on('click', this.gotoLast.bind(this));
             $('#ff-back').on('click', this.gotoFirst.bind(this));
+            $('div.toggle-urban-switch').on('click', this.toggleUrban.bind(this));
             $('#cards-form')
                 .on('keydown', 'input', this.cardLog.bind(this))
                 .on('keyup', 'input', this.wordLog.bind(this));
@@ -56,6 +58,23 @@ jQuery(function($) {
             if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
+        },
+        toggleUrban: function(element){
+            this.isUrban = !this.isUrban;
+            console.log(this.isUrban);
+            if($(element.target).hasClass("urban-on")){
+                $(element.target).removeClass("urban-on");
+                window.setTimeout(function(){
+                    $("div.toggle-urban-outer").attr("title", "Standard Definitions")
+                        .removeClass("switch-outer-on");
+                },100);
+            }else{
+                $(element.target).addClass("urban-on");
+                window.setTimeout(function(){
+                    $("div.toggle-urban-outer").attr("title", "Urban Definitions")
+                        .addClass("switch-outer-on");
+                },100);
+            }
         },
         // remove the actual submitted card and definition
         deleteCard: function(element) {
@@ -440,7 +459,7 @@ jQuery(function($) {
         submitSet: function() {
           if (this.canSubmit()) {
               $("div.loading-screen").addClass("loading-screen-visible");
-              $.post("/addNewCards", {filename: this.filename, words: JSON.stringify(this.cards)}, success => {
+              $.post("/addNewCards", {filename: this.filename, urbanDefs: JSON.stringify(this.isUrban), words: JSON.stringify(this.cards)}, success => {
                 $("div.loading-screen-visible").removeClass("loading-screen-visible");
                 if (this.addWordsVisible) {
                   this.toggleAddWords();

@@ -531,6 +531,43 @@ div.card input{
   background: rgba(0,0,0,0);
   font-size: 42px;
 }
+div.toggle-urban-outer{
+    position:absolute;
+    top: 90px;
+    transform:translate(0,-50%);
+    left:50px;
+    width:20px;
+    height:50px;
+    background:#055992;
+    border-radius:5px;
+    overflow:hidden;
+}
+div.toggle-urban-inner{
+    height:50px;
+    width:20px;
+    position:relative;
+    border-radius: 5px;
+}
+div.toggle-urban-switch{
+    position:absolute;
+    top:0;
+    left:0;
+    height:20px;
+    width:20px;
+    background:#75C5FB;
+    border-radius: 5px;
+    -webkit-box-shadow: 2px 3px 94px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 3px 94px 0px rgba(0,0,0,0.75);
+    box-shadow: 2px 3px 94px 0px rgba(0,0,0,0.75);
+    transition:all .2s ease-in-out;
+    cursor:pointer;
+}
+div.urban-on{
+    transform:translate(0,30px);
+}
+div.switch-outer-on{
+    background:#2fc13a;
+}
 #card-amt{
   position:absolute;
   top:0;
