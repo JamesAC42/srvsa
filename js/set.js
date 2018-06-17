@@ -90,7 +90,7 @@ jQuery(function($) {
         },
         gotoStudy: function() {
           let filename = this.filename;
-          document.location.href = "http://localhost:3000/study?set=" + filename;
+          document.location.href = "http://173.49.165.252:3456/study?set=" + filename;
           return;
         },
         openDefOptions: function(element) {
@@ -168,7 +168,7 @@ jQuery(function($) {
           if (confirm("Are you sure you want to delete this set?")) {
             var filename = this.getParameterByName("set");
             $.post('/deleteset',{file: filename}, success => {
-              document.location.href = 'http://localhost:3000/sets';
+              document.location.href = 'http://173.49.165.252:3456/sets';
             });
             return;
           }

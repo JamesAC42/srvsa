@@ -1,11 +1,26 @@
 {
   "files": [
     {
-      "filename": "fx4gl",
-      "dateCreated": 1494339688049,
-      "title": "sat words a-e",
-      "totalCards": 100,
+      "filename": "sfdqx",
+      "dateCreated": 1529197758472,
+      "title": "Vocab Test",
+      "totalCards": 19,
+      "canStudy": true
+    },
+    {
+      "filename": "ykx7o",
+      "dateCreated": 1529197901217,
+      "title": "test1",
+      "totalCards": 6,
+      "canStudy": true
+    },
+    {
+      "filename": "jiqfj",
+      "dateCreated": 1529197934687,
+      "title": "vocab 10-11",
+      "totalCards": 20,
       "canStudy": true
     }
-  ]
+  ],
+  "filename": "./templates/sets.pug"
 }

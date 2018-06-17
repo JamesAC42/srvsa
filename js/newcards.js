@@ -222,7 +222,19 @@ jQuery(function($){
             this.title = $('div.title-container input').val().trim();
             if(this.canSubmit()){
                 $("div.loading-screen").addClass("loading-screen-visible");
-                $.post("/", {title: JSON.stringify(this.title), urbanDefs: JSON.stringify(this.isUrban), words: JSON.stringify(this.cards)}, data=>document.location.href = data);
+                $.post("/", 
+                    {
+                        title: JSON.stringify(this.title),
+                        urbanDefs: JSON.stringify(this.isUrban),
+                        words: JSON.stringify(this.cards)
+                    },
+                    data => {
+                        console.log(data);
+                        window.location.href = data;
+                        console.log('-_-');
+                        return;
+                    }
+                );
             } else {
                 if (!this.title == ''){
                     $('div.message').text("You need at least 5 valid cards to create a set.")

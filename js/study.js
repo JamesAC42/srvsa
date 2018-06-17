@@ -108,7 +108,7 @@ jQuery(function($){
         },
         gotoEdit: function(){
         	let filename = this.getParameterByName("set");
-        	document.location.href = "http://localhost:3000/edit?set=" + filename;
+        	document.location.href = "http://173.49.165.252:3456/edit?set=" + filename;
         	return;
         },
         render: function(){

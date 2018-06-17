@@ -18,9 +18,12 @@ html(lang="en")
       each word in words
         div.card.right-card
           div.card-inner
-            div.word #{word.sanitizedw}
+            div.word 
+              div.word-inner 
+                span.word-inner-inner #{word.sanitizedw}
             div.definition 
-              span #{word.mainDefinition}
+              div.definition-inner
+                span.definition-inner-inner #{word.mainDefinition}
     div#controls
       div.control
         div.control-button.direction.disabled#back &#x2770;

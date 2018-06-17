@@ -111,7 +111,10 @@ function processForm(req, res){
       });
       fs.writeFile("./data/sets.json", JSON.stringify(dataset, null, '  '), "utf8", callback=>{return});
       fs.writeFile(filepath, JSON.stringify(dataJson, null, '  '), "utf8", callback=>{return});
-      res.write('http://localhost:3000/edit?set=' +filename);
+      let newUrl = 'http://localhost:3456/edit?set=' + filename;
+      console.info(newUrl);
+      res.writeHead(200, {'Content-type':'text/plain'});
+      res.write(newUrl);
       res.end();
     }).catch(err => {
       console.error(err);
@@ -472,5 +475,5 @@ function filterWords(input){
   return input !== '';
 }
 
-server.listen(3000);
-console.log('Server listening on 3000');
+server.listen(3456, '0.0.0.0');
+console.log('Server listening on 3456');

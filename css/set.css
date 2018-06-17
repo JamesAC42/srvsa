@@ -475,7 +475,7 @@ div.card{
   background: #fff;
   top:45%;
   left:50%;
-  transform: translate(-50%,0);
+  transform: translate(-50%,-50%);
   -webkit-box-shadow: 2px 6px 44px -15px rgba(0,0,0,0.75);
   -moz-box-shadow: 2px 6px 44px -15px rgba(0,0,0,0.75);
   box-shadow: 2px 6px 44px -15px rgba(0,0,0,0.75);
@@ -488,10 +488,10 @@ div.added{
   animation:recoil .2s ease-in-out;
 }
 div.right-card{
-  transform:translate(100vw, 0);
+  transform:translate(100vw, -50%);
 }
 div.left-card{
-  transform:translate(-100vw, 0);
+  transform:translate(-100vw, -50%);
 }
 div.close-new-word{
   position: absolute;
@@ -585,7 +585,7 @@ div.progress-bar-outer{
   position:absolute;
   bottom:30vh;
   left:50vw;
-  transform:translate(-50%,400%);
+  transform:translate(-50%,-50%);
   height:30px;
   width:45vw;
   max-width:600px;
@@ -757,13 +757,13 @@ div.control-button:hover{
 }
 @keyframes recoil{
   50%{
-      transform:translate(-20%, 0);
+      transform:translate(-20%, -50%);
   }
   75%{
-      transform:translate(-40%, 0);
+      transform:translate(-40%, -50%);
   }
   100%{
-      transform:translate(-50%,0);
+      transform:translate(-50%,-50%);
   }
 }
 @media screen and (max-height: 700px){

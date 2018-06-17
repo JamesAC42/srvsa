@@ -22,22 +22,23 @@ body{
 	width:100px;
 	transform: translate(0,-50%);
 	border-radius:20px;
-	color: #fff;
 	line-height: 50px;
 	text-align:center;
 	font-size:20px;
 	font-family: 'Arimo', sans-serif;
 	text-decoration: none;
 	cursor:pointer;
-	transition: background .2s ease-in-out;
+	transition: background .1s ease-in-out;
 	top:35px;
 }
 #home-button{
 	background: #729AFF;
+    color:#fff;
 	left:15px;
 }
 #edit-button{
 	background: #7FE962;
+    color:#1C4A0F;
 	left:135px;
 }
 #home-button:hover{
@@ -107,6 +108,7 @@ div.card{
     background-image: linear-gradient(90deg, transparent 79px, #ff8080 79px, #ff8080 81px, transparent 81px),
 linear-gradient(#eee .1em, transparent .1em);
     background-size: 100% 1.2em;
+    cursor:pointer;
 }
 div.card:hover{
     -webkit-box-shadow: 0px 3px 31px 1px rgba(0,0,0,0.75);
@@ -140,10 +142,23 @@ div.word{
     max-width:600px;
 	top:0;
 	left:0;
-	line-height:40vh;
-	text-align:center;
-	font-size:40px;
-	font-family: 'Arimo', sans-serif;
+}
+div.word-inner{
+    position:relative;
+    height:40vh;
+    width:45vw;
+    max-height: 300px;
+    max-width:600px;
+}
+span.word-inner-inner{
+    position:absolute;
+    display:block;
+    width:100%;
+    top:50%;
+    transform: translate(0,-50%);
+    text-align:center;
+    font-size:40px;
+    font-family: 'Arimo', sans-serif;
 }
 div.definition{
 	position:absolute;
@@ -163,15 +178,23 @@ div.definition{
 div.definition::-webkit-scrollbar{
     display:none;
 }
-div.definition span{
-	padding:0 10px;
+div.definition-inner{
+    position:relative;
+    height:40vh;
+    width:45vw;
+    max-height:300px;
+    max-width:600px;
+}
+span.definition-inner-inner{
+    margin-top:-6vh;
+	padding:0 20px;
 	display: -moz-inline-box;
 	display: inline-block;  
 	text-align: center;
 	line-height: normal;
-	vertical-align: middle; 
+	vertical-align: middle;
 	font-family: 'Arimo', sans-serif;
-	font-size:28px;
+	font-size:26px;
 }
 div.visible{
 	transform: rotateX(180deg) translate(0,0);
